@@ -1,0 +1,102 @@
+<resources>
+    <!--Login Fragment-->
+    <string name="login_fragment_email">Email</string>
+    <string name="login_fragment_password">Senha</string>
+    <string name="login_fragment_enter">Entrar</string>
+
+    <!--End-->
+
+    <!--Shopping List-->
+    <string name="app_name">Lista de compras App</string>
+    <string name="empty_list">Lista vazia!</string>
+    <string name="shopping_list_author_name">Criado por: %s</string>
+    <string name="shopping_list_current_progress">%d / %d</string>
+    <string name="created_by">Criado por: %s</string>
+    <string name="shopping_list_delete_item">Deseja realmente deletar essa lista?</string>
+    <string name="shopping_list_edit_item">Edição do título da lista de compras</string>
+    <string name="shopping_list_hint_dialog">Título</string>
+
+
+    <!--Speak-->
+        <string name="shopping_list_empty_list">Clique no + para criar uma nova lista!</string>
+        <string name="shopping_list_redirect_to_item_shopping_list">Após o bip diga se deseja ser redirecionado para adicionar os itens da lista de compras? Sim ou não</string>
+    <!--End-->
+
+    <!--Item Shopping List-->
+    <string name="item_shopping_list_empty_list">Clique no microfone para adicionar um novo item na lista de compras!</string>
+    <string name="item_shopping_list_close_content_description">Item da lista de compras</string>
+    <string name="item_shopping_list_txt">1 pacote de bolacha maizena</string>
+    <!--Speak-->
+        <string name="speak_item_shopping_pos_redirect">Após o bip diga se deseja adicionar um item na sua lista de compras? Sim ou não</string>
+        <string name="speak_item_shopping_add_item">Após o bip diga o nome do item</string>
+    <!--End-->
+
+    <!--Bottom navigation-->
+    <string name="home_navigation">Home</string>
+
+    <string name="text_to_speech_title_shopping_list">Após o bip, diga o nome da lista de compras</string>
+    <!--End-->
+
+    <!-- Text to speech commons -->
+    <string name="speech_prompt">Test reconhecimento de voz!</string>
+    <!-- On error-->
+        <string name="speech_not_supported">Reconhecimento de voz não suportado!</string>
+        <string name="speech_error_audio">Audio recording error</string>
+        <string name="speech_error_client">Client side error</string>
+        <string name="speech_error_insufficient_permissions">Insufficient permissions</string>
+        <string name="speech_error_unknown">Aconteceu um erro desconhecido!</string>
+        <string name="speech_error_recognition_service_busy">O reconhecedor de voz no momento está ocupado!</string>
+        <string name="speech_error_network_and_client_and_timout_and_server">Falha com a conexão da internet!</string>
+        <string name="speech_error_could_not_start_speech_recognizer">Não foi possível iniciar o reconhecedor de voz</string>
+    <!--End-->
+
+    <!--Speak commons-->'
+    <string name="speak_confirm">SIM</string>
+    <string name="speak_ok">OK</string>
+    <string name="speak_not_understand">Não entendi</string>
+    <string name="speak_repeat">Você deseja repetir?</string>
+    <string name="speak_not_understand_and_repeat">Não entendi, você deseja repetir? Após o bip diga, sim ou não</string>
+    <!--End-->
+
+    <string name="element_arg">%s</string>
+
+    <!-- Dialog recognition explain -->
+    <string name="dialog_recognition_image_content_description">Imagem do microfone</string>
+    <string name="explain_separator_option">Obs: Caso deseje separar os itens fale (e) Ex: pão e leite</string>
+    <string name="dialog_recognition_description">Após o bip diga o nome do seu item para adicionar na lista de compras!</string>
+    <string name="not_added_in_cart">Não adicionados no carrinho</string>
+    <string name="added_in_cart">Adicionados no carrinho</string>
+    <string name="visitor_enter">Entrar como visitante</string>
+
+    <!-- commons -->
+    <string name="ok_confirm">OK</string>
+    <string name="nothing"/>
+<!--    <string name="url_debug">http://192.168.25.16:3000/</string>-->
+    <string name="url_app">https://shopping-list-api-for-study.herokuapp.com/</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
+    <string name="yes_confirm">SIM</string>
+    <string name="no_confirm">NÃO</string>
+    <string name="close_confirm">FECHAR</string>
+
+
+    <!-- error -->
+    <string name="generic_dialog_title">Atenção!</string>
+    <string name="login_error">Ocorreu uma falha ao tentar se conectar!</string>
+
+
+    <!-- user registration view -->
+    <string name="user_registration_view_hint_email">Email</string>
+    <string name="user_registration_view_hint_password">Senha</string>
+    <string name="user_registration_view_hint_last_name">Ultimo nome</string>
+    <string name="user_registration_view_hint_first_name">Primeiro nome</string>
+    <string name="user_registration_view_register">Cadastrar</string>
+    <string name="user_registration_view_hint_password_repeat">Repita a senha</string>
+    <string name="user_registration_view_title">Cadastro</string>
+
+    <string name="user_registration_view_register_is_success">Cadastro realizado com sucesso!</string>
+    <string name="user_registration_view_register_not_is_success">Falha ao cadastrar o usuário!</string>
+    <string name="request_permission_record_audio_failed">OK, permissão negada para gravar audio!</string>
+
+
+</resources>

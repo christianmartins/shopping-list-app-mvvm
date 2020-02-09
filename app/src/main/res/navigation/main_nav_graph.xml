@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/shoppingListFragment"
+        android:name="br.com.shoppinglistmvvmapp.view.fragment.ShoppingListFragment"
+        android:label="ShoppingListFragment"
+        tools:layout="@layout/shopping_list_layout"
+        >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_itemShoppingListFragment"
+            app:destination="@id/itemShoppingListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemShoppingListFragment"
+        android:name="br.com.shoppinglistmvvmapp.view.fragment.ItemShoppingListFragment"
+        tools:layout="@layout/item_shopping_list_layout"
+        android:label="ItemShoppingListFragment" >
+        <argument
+            android:name="shoppingListId"
+            app:argType="string" />
+    </fragment>
+
+    <action android:id="@+id/action_global_shoppingListFragment" app:destination="@id/shoppingListFragment"/>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="br.com.shoppinglistmvvmapp.view.fragment.LoginFragment"
+        tools:layout="@layout/login_fragment_layout"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_userRegistrationView"
+            app:destination="@id/userRegistrationView" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userRegistrationView"
+        android:name="br.com.shoppinglistmvvmapp.view.fragment.UserRegistrationFragment"
+        android:label="UserRegistrationView"
+        tools:layout="@layout/user_registration_view_layout"
+        >
+        <action
+            android:id="@+id/action_userRegistrationView_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
+</navigation>
