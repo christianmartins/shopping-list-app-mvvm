@@ -7,7 +7,7 @@
     <!--End-->
 
     <!--Shopping List-->
-    <string name="app_name">Lista de compras App</string>
+    <string name="app_name">Lista de compras App - MVVM</string>
     <string name="empty_list">Lista vazia!</string>
     <string name="shopping_list_author_name">Criado por: %s</string>
     <string name="shopping_list_current_progress">%d / %d</string>
