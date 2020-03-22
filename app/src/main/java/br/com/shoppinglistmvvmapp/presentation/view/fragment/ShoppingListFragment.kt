@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.fragment
+package br.com.shoppinglistmvvmapp.presentation.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ import br.com.shoppinglistmvvmapp.utils.enum.ActionType
 import br.com.shoppinglistmvvmapp.utils.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.utils.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.utils.interfaces.ShoppingFragmentListClickHandler
-import br.com.shoppinglistmvvmapp.view.adapter.ShoppingListAdapter
+import br.com.shoppinglistmvvmapp.presentation.view.adapter.ShoppingListAdapter
 import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.android.synthetic.main.shopping_list_layout.*
 import kotlinx.coroutines.Dispatchers

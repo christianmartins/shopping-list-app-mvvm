@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.fragment
+package br.com.shoppinglistmvvmapp.presentation.view.fragment
 
 import android.os.Bundle
 import androidx.annotation.StringRes

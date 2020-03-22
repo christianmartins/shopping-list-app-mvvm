@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.activity
+package br.com.shoppinglistmvvmapp.presentation.view.activity
 
 import android.Manifest
 import android.content.pm.PackageManager

@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.utils
+package br.com.shoppinglistmvvmapp.presentation.view.utils
 
 import android.content.Context
 import android.view.View

@@ -33,6 +33,7 @@
 
     <!--Bottom navigation-->
     <string name="home_navigation">Home</string>
+    <string name="home_navigation_mvvm">MVVM</string>
 
     <string name="text_to_speech_title_shopping_list">Após o bip, diga o nome da lista de compras</string>
     <!--End-->

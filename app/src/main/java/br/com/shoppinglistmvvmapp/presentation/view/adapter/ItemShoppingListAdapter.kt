@@ -1,12 +1,12 @@
-package br.com.shoppinglistmvvmapp.view.adapter
+package br.com.shoppinglistmvvmapp.presentation.view.adapter
 
 import android.view.View
 import android.view.ViewGroup
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.utils.interfaces.ItemShoppingListListeners
-import br.com.shoppinglistmvvmapp.view.viewholder.BaseViewHolder
-import br.com.shoppinglistmvvmapp.view.viewholder.ItemShoppingListViewHolder
+import br.com.shoppinglistmvvmapp.presentation.view.viewholder.BaseViewHolder
+import br.com.shoppinglistmvvmapp.presentation.view.viewholder.ItemShoppingListViewHolder
 
 class ItemShoppingListAdapter(
     private val itemShoppingListListeners: ItemShoppingListListeners

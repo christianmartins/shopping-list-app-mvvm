@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.dialog
+package br.com.shoppinglistmvvmapp.presentation.view.dialog
 
 import android.app.Dialog
 import android.content.Context

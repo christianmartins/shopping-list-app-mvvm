@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.fragment
+package br.com.shoppinglistmvvmapp.presentation.view.fragment
 
 import android.content.Context
 import android.content.DialogInterface
@@ -12,8 +12,8 @@ import br.com.shoppinglistmvvmapp.extensions.hide
 import br.com.shoppinglistmvvmapp.extensions.show
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.event.MessageEvent
-import br.com.shoppinglistmvvmapp.view.activity.MainActivity
-import br.com.shoppinglistmvvmapp.view.utils.CustomTextInputLayout
+import br.com.shoppinglistmvvmapp.presentation.view.activity.MainActivity
+import br.com.shoppinglistmvvmapp.presentation.view.utils.CustomTextInputLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton

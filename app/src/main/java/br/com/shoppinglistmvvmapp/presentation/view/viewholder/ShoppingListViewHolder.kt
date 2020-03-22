@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.view.viewholder
+package br.com.shoppinglistmvvmapp.presentation.view.viewholder
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
@@ -18,7 +18,7 @@ class ShoppingListViewHolder(
     private val description = itemView.findViewById<MaterialTextView>(R.id.shopping_list_description)
     private val authorName = itemView.findViewById<MaterialTextView>(R.id.shopping_list_author_name)
     private val date = itemView.findViewById<MaterialTextView>(R.id.shopping_list_date)
-    private val progress = itemView.findViewById<MaterialTextView>(R.id.shopping_list_items_for_concluision)
+    private val progress = itemView.findViewById<MaterialTextView>(R.id.shopping_list_items_for_conclusion)
     private val moreMenu = itemView.findViewById<AppCompatImageView>(R.id.shopping_list_more)
     private val context by lazy {
         itemView.context

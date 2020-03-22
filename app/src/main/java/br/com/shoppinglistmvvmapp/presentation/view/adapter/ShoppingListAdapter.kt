@@ -1,12 +1,12 @@
-package br.com.shoppinglistmvvmapp.view.adapter
+package br.com.shoppinglistmvvmapp.presentation.view.adapter
 
 import android.view.View
 import android.view.ViewGroup
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
 import br.com.shoppinglistmvvmapp.utils.interfaces.ShoppingFragmentListClickHandler
-import br.com.shoppinglistmvvmapp.view.viewholder.BaseViewHolder
-import br.com.shoppinglistmvvmapp.view.viewholder.ShoppingListViewHolder
+import br.com.shoppinglistmvvmapp.presentation.view.viewholder.BaseViewHolder
+import br.com.shoppinglistmvvmapp.presentation.view.viewholder.ShoppingListViewHolder
 
 class ShoppingListAdapter(private val clickHandler: ShoppingFragmentListClickHandler): BaseAdapter() {
 
