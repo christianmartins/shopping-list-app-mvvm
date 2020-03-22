@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.databinding.ShoppingListMvvmLayoutBinding
 import br.com.shoppinglistmvvmapp.extensions.setEmptyList
 import br.com.shoppinglistmvvmapp.extensions.yesAnswer
+import br.com.shoppinglistmvvmapp.presentation.view.adapter.ShoppingListAdapterMVVM
 import br.com.shoppinglistmvvmapp.presenter.ShoppingListFragmentPresenter
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
@@ -21,7 +23,6 @@ import br.com.shoppinglistmvvmapp.utils.enum.ActionType
 import br.com.shoppinglistmvvmapp.utils.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.utils.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.utils.interfaces.ShoppingFragmentListClickHandler
-import br.com.shoppinglistmvvmapp.presentation.view.adapter.ShoppingListAdapterMVVM
 import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.android.synthetic.main.shopping_list_layout.*
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +38,8 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
 
     private var jobRefresh: Job? = null
 
+    private lateinit var binding: ShoppingListMvvmLayoutBinding
+
     private fun isRefreshing(isRefresh: Boolean){
         activity?.runOnUiThread {shopping_list_swipe_refresh?.isRefreshing = isRefresh}
     }
@@ -47,8 +50,9 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        binding = ShoppingListMvvmLayoutBinding.inflate(inflater, container, false)
         getFab()?.setImageResource(R.drawable.ic_add_white_24dp)
-        return inflater.inflate(R.layout.shopping_list_layout, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -187,7 +191,6 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
         presenter.updateTitle(newValue, shoppingList)
         adapter.notifyDataSetChanged()
     }
-
 
     override fun onPause() {
         sendShoppingList()

@@ -57,5 +57,11 @@
     <fragment
         android:id="@+id/shoppingListFragmentMVVM"
         android:name="br.com.shoppinglistmvvmapp.presentation.view.fragment.ShoppingListFragmentMVVM"
-        android:label="ShoppingListFragmentMVVM" />
+        android:label="ShoppingListFragmentMVVM"
+        tools:layout="@layout/shopping_list_mvvm_layout"
+
+        />
+
+    <action android:id="@+id/action_global_shoppingListFragmentMVVM"
+        app:destination="@id/shoppingListFragmentMVVM" />
 </navigation>

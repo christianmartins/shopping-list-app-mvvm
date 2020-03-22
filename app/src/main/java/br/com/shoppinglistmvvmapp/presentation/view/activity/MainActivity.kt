@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.extensions.setupBottomNavigationBar
+import br.com.shoppinglistmvvmapp.presentation.view.fragment.ShoppingListFragmentMVVMDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,6 +42,13 @@ class MainActivity : BaseActivity(){
         }
 
         onBottomNavigationMenuItemReselect()
+        tempRedirectToMVVMFragment()
+    }
+
+    private fun tempRedirectToMVVMFragment(){
+        fab_redirect_to_mvvm?.setOnClickListener {
+            findNavController(R.id.nav_host_container).navigate(ShoppingListFragmentMVVMDirections.actionGlobalShoppingListFragmentMVVM())
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
