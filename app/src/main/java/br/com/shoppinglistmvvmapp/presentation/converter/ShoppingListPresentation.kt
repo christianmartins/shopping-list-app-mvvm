@@ -7,12 +7,12 @@ import br.com.shoppinglistmvvmapp.extensions.nonNullable
 import br.com.shoppinglistmvvmapp.utils.DateUtils
 
 data class ShoppingListPresentation (
-    var id: String,
-    var title: String,
-    var description: String,
-    var authorName: String,
-    var date: String,
-    var itemsForConclusion: String
+    val id: String,
+    val title: String,
+    val description: String,
+    val authorName: String,
+    val date: String,
+    val itemsForConclusion: String
 ): BasePresentation() {
     companion object{
         fun convert(shoppingList: ShoppingList): ShoppingListPresentation{

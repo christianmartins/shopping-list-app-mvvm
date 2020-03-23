@@ -11,18 +11,8 @@ class ShoppingListViewHolderMVVM(
 ): BaseViewHolderMVVM(itemBinding.root) {
 
     override fun setItem(presentation: Presentation) {
-        itemBinding
         if(presentation is ShoppingListPresentation) {
-            itemBinding.shoppingListPresentation?.let {
-                with(it) {
-                    authorName = presentation.authorName
-                    title = presentation.title
-                    description = presentation.description
-                    authorName = presentation.authorName
-                    date = presentation.date
-                    itemsForConclusion = presentation.itemsForConclusion
-                }
-            }
+            itemBinding.shoppingListPresentation = presentation
             itemBinding.executePendingBindings()
 
             itemView.setOnClickListener {
