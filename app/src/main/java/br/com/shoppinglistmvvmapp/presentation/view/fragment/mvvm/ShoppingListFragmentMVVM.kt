@@ -1,23 +1,23 @@
-package br.com.shoppinglistmvvmapp.presentation.view.fragment
+package br.com.shoppinglistmvvmapp.presentation.view.fragment.mvvm
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
 import br.com.shoppinglistmvvmapp.databinding.ShoppingListMvvmLayoutBinding
 import br.com.shoppinglistmvvmapp.extensions.setEmptyList
 import br.com.shoppinglistmvvmapp.extensions.yesAnswer
 import br.com.shoppinglistmvvmapp.presentation.view.adapter.ShoppingListAdapterMVVM
-import br.com.shoppinglistmvvmapp.presenter.ShoppingListFragmentPresenter
+import br.com.shoppinglistmvvmapp.presentation.view.fragment.BaseCollectionFragment
+import br.com.shoppinglistmvvmapp.presentation.view.fragment.ShoppingListFragmentDirections
+import br.com.shoppinglistmvvmapp.presentation.viewmodel.ShoppingListFragmentViewModel
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
-import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import br.com.shoppinglistmvvmapp.utils.RecognitionParams
 import br.com.shoppinglistmvvmapp.utils.enum.ActionType
 import br.com.shoppinglistmvvmapp.utils.event.RecognitionOnErrorEvent
@@ -32,7 +32,9 @@ import kotlinx.coroutines.launch
 
 class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListClickHandler{
 
-    private val presenter by lazy { ShoppingListFragmentPresenter() }
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(ShoppingListFragmentViewModel::class.java)
+    }
 
     private val adapter by lazy { ShoppingListAdapterMVVM(this) }
 
@@ -50,49 +52,59 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = ShoppingListMvvmLayoutBinding.inflate(inflater, container, false)
+        binding = getFragmentBinding(inflater, container)
         getFab()?.setImageResource(R.drawable.ic_add_white_24dp)
         return binding.root
+    }
+
+    private fun getFragmentBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): ShoppingListMvvmLayoutBinding{
+         return ShoppingListMvvmLayoutBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        initDataShoppingList()
+        initViewModel()
         onRefreshListener()
-        marginInRecyclerView()
     }
 
-    private fun initDataShoppingList(){
-        if(LoggedUser.isLogged)
-            lifecycleScope.launch(Dispatchers.IO){ loadListAsync() }
-        else
-            loadList()
+    override fun initAdapter(){
+        binding.shoppingListRecyclerView.adapter = adapter
+    }
+
+    private fun initViewModel(){
+        viewModel.getShoppingLists().observe(viewLifecycleOwner, Observer { shoppingLists ->
+            loadList(shoppingLists)
+        })
     }
 
     private suspend fun loadListAsync(){
         isRefreshing(true)
-        presenter.loadListByUser()
+        viewModel.fetchShoppingListsByUser()
         loadList()
     }
 
-    private fun loadList(){
+    private fun loadList(newList: List<ShoppingList> = viewModel.getOrderedItems()){
         activity?.runOnUiThread {
             try{
                 adapter.clear()
-                adapter.addAll(presenter.getOrderedItems())
+                adapter.addAll(newList)
                 empty_list.text = getString(R.string.shopping_list_empty_list)
                 empty_list.setEmptyList(adapter.itemCount)
             }catch (e: Exception){
                 e.printStackTrace()
+            }finally {
+                isRefreshing(false)
             }
         }
-        isRefreshing(false)
     }
 
     private fun onRefreshListener(){
         activity?.runOnUiThread {
-            shopping_list_swipe_refresh?.setOnRefreshListener {
+            binding.shoppingListSwipeRefresh.setOnRefreshListener {
                 if(jobRefresh?.isActive == true)
                     jobRefresh?.cancel()
 
@@ -104,12 +116,8 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
     }
 
     private suspend fun refresh(){
-        presenter.sendShoppingList()
+        viewModel.sendShoppingList()
         loadListAsync()
-    }
-
-    override fun initAdapter(){
-        shopping_list_recycler_view?.adapter = adapter
     }
 
     override fun onRecognitionOnErrorEvent(event: RecognitionOnErrorEvent) {
@@ -124,7 +132,7 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
                 }
                 speakOk()
             } else {
-                val shoppingList = presenter.createShoppingList(bestResult)
+                val shoppingList = viewModel.createShoppingList(bestResult)
                 addItemInAdapter(shoppingList)
 
                 val params = RecognitionParams(ActionType.REDIRECT_TO_ITEM_SHOPPING_LIST, shoppingList.id)
@@ -155,7 +163,9 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
     private fun navigateToItemsShoppingListFragment(shoppingListId: String){
         activity?.runOnUiThread {
             findNavController().navigate(
-                ShoppingListFragmentDirections.actionShoppingListFragmentToItemShoppingListFragment(shoppingListId)
+                ShoppingListFragmentDirections.actionShoppingListFragmentToItemShoppingListFragment(
+                    shoppingListId
+                )
             )
         }
     }
@@ -169,7 +179,7 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
             yesConfirmMessage(
                 resStringMessage = R.string.shopping_list_delete_item,
                 onYesClick = {
-                    presenter.deleteItem(shoppingList)
+                    viewModel.deleteItem(shoppingList)
                     loadList()
                 }
             )
@@ -188,7 +198,7 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
     }
 
     private fun updateTitle(newValue: String, shoppingList: ShoppingList){
-        presenter.updateTitle(newValue, shoppingList)
+        viewModel.updateTitle(newValue, shoppingList)
         adapter.notifyDataSetChanged()
     }
 
@@ -199,42 +209,7 @@ class ShoppingListFragmentMVVM: BaseCollectionFragment(), ShoppingFragmentListCl
 
     private fun sendShoppingList(){
         lifecycleScope.launch(Dispatchers.IO) {
-            presenter.sendShoppingList()
+            viewModel.sendShoppingList()
         }
-    }
-
-    private fun marginInRecyclerView(){
-        shopping_list_recycler_view?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                shopping_list_swipe_refresh?.let {
-                    val totalItemCount = recyclerView.layoutManager?.itemCount?: 0
-                    val lastVisibleItem = (recyclerView.layoutManager as? LinearLayoutManager)?.findLastCompletelyVisibleItemPosition()?: 0
-                    val marginLayoutParams = FrameLayout.LayoutParams(it.layoutParams)
-
-                    val text = "->> totalItemCount = $totalItemCount -- lastVisibleItem = $lastVisibleItem}"
-
-                    val textTest: String
-                    if ((lastVisibleItem + 2) >= totalItemCount) {
-                        if(newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                            marginLayoutParams.bottomMargin = 80
-                            it.layoutParams = marginLayoutParams
-
-                            textTest = "Apply margin -> "
-                            println(textTest + text)
-                        }
-                    }else {
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                            marginLayoutParams.bottomMargin = 0
-                            it.layoutParams = marginLayoutParams
-
-                            textTest = "Remove margin"
-                            println(textTest + text)
-                        }
-                    }
-                }
-            }
-        })
     }
 }

@@ -1,5 +1,6 @@
 package br.com.shoppinglistmvvmapp.data.repository
 
+import androidx.lifecycle.LiveData
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
 import br.com.shoppinglistmvvmapp.data.webservice.NetworkServiceProvider
 import br.com.shoppinglistmvvmapp.data.webservice.request.RequestSaveShoppingList
@@ -46,6 +47,23 @@ class ShoppingListRepository {
     }
 
     suspend fun loadListByUser(){
+        try{
+            LoggedUser.user?.let {user ->
+                val response = withContext(Dispatchers.IO){
+                    networkServiceProvider.getService().getShoppingListByUser(user.id).execute()
+                }
+                response.body()?.shoppingLists?.let { shoppingListsNonNullable ->
+                    val receivedShoppingList = shoppingListsNonNullable.onEach { it.sent = true }
+                    GlobalUtils.shoppingLists.clear()
+                    GlobalUtils.shoppingLists.addAll(receivedShoppingList)
+                }
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+    suspend fun fetchByUser(){
         try{
             LoggedUser.user?.let {user ->
                 val response = withContext(Dispatchers.IO){

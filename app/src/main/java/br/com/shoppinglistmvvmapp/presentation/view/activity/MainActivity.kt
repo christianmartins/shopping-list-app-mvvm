@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.extensions.setupBottomNavigationBar
-import br.com.shoppinglistmvvmapp.presentation.view.fragment.ShoppingListFragmentMVVMDirections
+import br.com.shoppinglistmvvmapp.presentation.view.fragment.mvvm.ShoppingListFragmentMVVMDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*

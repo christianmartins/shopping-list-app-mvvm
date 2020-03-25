@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragmentMVVM"
-        android:name="br.com.shoppinglistmvvmapp.presentation.view.fragment.ShoppingListFragmentMVVM"
+        android:name="br.com.shoppinglistmvvmapp.presentation.view.fragment.mvvm.ShoppingListFragmentMVVM"
         android:label="ShoppingListFragmentMVVM"
         tools:layout="@layout/shopping_list_mvvm_layout"
 
