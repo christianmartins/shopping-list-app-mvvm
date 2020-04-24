@@ -140,7 +140,7 @@ open class BaseFragment: Fragment(){
         context?.let {contextNonNullable->
             val editText = createCustomTextInputLayout(contextNonNullable, resStringHint, text)
 
-            MaterialAlertDialogBuilder(context)
+            MaterialAlertDialogBuilder(contextNonNullable)
                 .setTitle(resStringTitle)
                 .setView(editText)
                 .setPositiveButton(resStringPositiveButton) { dialogInterface, _ ->
