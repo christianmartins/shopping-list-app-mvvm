@@ -13,9 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        android:name=".App"
+        android:name=".framework.App"
         >
-        <activity android:name="br.com.shoppinglistmvvmapp.presentation.view.activity.MainActivity"
+        <activity android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.activity.MainActivity"
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="br.com.shoppinglistmvvmapp.presentation.view.activity.BaseActivity"/>
+        <activity android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.activity.BaseActivity"/>
         <!-- This is added to handle a deep link -->
         <!--        <nav-graph android:value="@navigation/list" />-->
     </application>

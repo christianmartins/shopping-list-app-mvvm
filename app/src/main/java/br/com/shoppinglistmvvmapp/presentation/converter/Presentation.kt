@@ -1,3 +1,0 @@
-package br.com.shoppinglistmvvmapp.presentation.converter
-
-interface Presentation

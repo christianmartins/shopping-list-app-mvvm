@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.utils.event.RecognitionOnResultEvent
-import br.com.shoppinglistmvvmapp.utils.speak.SpeakUtils
+import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
+import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
 import org.greenrobot.eventbus.EventBus
 
 
@@ -15,7 +15,12 @@ class RecognitionListener(private val recognitionParams: RecognitionParams? = nu
         results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.let {data ->
             if(data.size > 0){
                 val bestResult = data[0].toString().trim()
-                EventBus.getDefault().post(RecognitionOnResultEvent(bestResult, recognitionParams))
+                EventBus.getDefault().post(
+                    RecognitionOnResultEvent(
+                        bestResult,
+                        recognitionParams
+                    )
+                )
             }
         }
     }

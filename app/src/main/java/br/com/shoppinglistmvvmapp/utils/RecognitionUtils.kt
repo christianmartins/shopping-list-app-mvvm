@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import br.com.shoppinglistmvvmapp.App
+import br.com.shoppinglistmvvmapp.framework.App
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.utils.speak.SpeakUtils
+import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
 import java.util.*
 
 class RecognitionUtils {

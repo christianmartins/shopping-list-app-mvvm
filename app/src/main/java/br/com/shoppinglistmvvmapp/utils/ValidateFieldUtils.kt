@@ -1,7 +1,7 @@
 package br.com.shoppinglistmvvmapp.utils
 
-import br.com.shoppinglistmvvmapp.extensions.isNotNullOrIsNotEmptyOrIsNotBlank
-import br.com.shoppinglistmvvmapp.extensions.isValidEmail
+import br.com.shoppinglistmvvmapp.utils.extension.isNotNullOrIsNotEmptyOrIsNotBlank
+import br.com.shoppinglistmvvmapp.utils.extension.isValidEmail
 
 class ValidateFieldUtils {
 
