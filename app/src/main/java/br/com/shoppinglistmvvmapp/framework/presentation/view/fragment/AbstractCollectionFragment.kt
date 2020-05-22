@@ -3,7 +3,7 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.fragment
 import android.os.Bundle
 import android.view.View
 
-abstract class BaseCollectionFragment: BaseSpeakAndRecognitionFragment() {
+abstract class AbstractCollectionFragment: AbstractSpeakAndRecognitionFragment() {
 
     abstract fun initAdapter()
 

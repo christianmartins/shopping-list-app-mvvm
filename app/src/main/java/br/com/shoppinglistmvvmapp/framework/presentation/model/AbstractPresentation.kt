@@ -1,0 +1,3 @@
+package br.com.shoppinglistmvvmapp.framework.presentation.model
+
+abstract class AbstractPresentation

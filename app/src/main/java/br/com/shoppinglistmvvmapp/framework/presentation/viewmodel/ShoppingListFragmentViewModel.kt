@@ -8,7 +8,7 @@ import br.com.shoppinglistmvvmapp.data.repository.ShoppingListRepository
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import kotlinx.coroutines.Dispatchers
 
-class ShoppingListFragmentViewModel: BaseViewModel() {
+class ShoppingListFragmentViewModel: AbstractViewModel() {
 
     private val shoppingListRepository = ShoppingListRepository()
 

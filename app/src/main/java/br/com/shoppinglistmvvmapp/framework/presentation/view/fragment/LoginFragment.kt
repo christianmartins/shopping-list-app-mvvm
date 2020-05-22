@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.login_fragment_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginFragment: BaseFragment() {
+class LoginFragment: AbstractFragment() {
 
     private val presenter by lazy {
         LoginPresenter()

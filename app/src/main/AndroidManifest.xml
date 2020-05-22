@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.activity.BaseActivity"/>
+        <activity android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.activity.AbstractActivity"/>
         <!-- This is added to handle a deep link -->
         <!--        <nav-graph android:value="@navigation/list" />-->
     </application>

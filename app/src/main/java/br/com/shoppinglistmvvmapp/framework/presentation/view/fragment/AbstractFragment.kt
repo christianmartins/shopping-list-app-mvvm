@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.ThreadMode
 import java.lang.ref.WeakReference
 
 
-open class BaseFragment: Fragment(){
+open class AbstractFragment: Fragment(){
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun onMessageEvent(event: MessageEvent) {}

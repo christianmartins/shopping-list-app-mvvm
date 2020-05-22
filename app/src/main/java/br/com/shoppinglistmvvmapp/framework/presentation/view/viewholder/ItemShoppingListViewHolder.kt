@@ -7,6 +7,7 @@ import br.com.shoppinglistmvvmapp.data.model.BaseModel
 import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.changeColor
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setPaintFlagsStrikeThroughEffect
+import br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.old.BaseViewHolder
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
 import com.google.android.material.textview.MaterialTextView
 

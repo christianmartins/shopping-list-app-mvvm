@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder
+package br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.old
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

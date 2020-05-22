@@ -6,6 +6,7 @@ import androidx.appcompat.widget.PopupMenu
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.BaseModel
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.old.BaseViewHolder
 import br.com.shoppinglistmvvmapp.utils.DateUtils
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentListClickHandler
 import com.google.android.material.textview.MaterialTextView

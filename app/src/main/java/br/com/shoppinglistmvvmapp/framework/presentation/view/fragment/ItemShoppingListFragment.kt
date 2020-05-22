@@ -21,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ItemShoppingListFragment: BaseCollectionFragment(), ItemShoppingListListeners {
+class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListListeners {
 
     private val presenter by lazy {
         ItemShoppingListFragmentPresenter()

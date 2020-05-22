@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.user_registration_view_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UserRegistrationFragment : BaseFragment() {
+class UserRegistrationFragment : AbstractFragment() {
 
     private val presenter by lazy {
         UserRegistrationPresenter()

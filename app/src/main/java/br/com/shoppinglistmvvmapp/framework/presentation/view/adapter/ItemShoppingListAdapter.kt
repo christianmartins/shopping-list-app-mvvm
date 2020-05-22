@@ -4,8 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.framework.presentation.view.adapter.old.BaseAdapter
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
-import br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.BaseViewHolder
+import br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.old.BaseViewHolder
 import br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.ItemShoppingListViewHolder
 
 class ItemShoppingListAdapter(

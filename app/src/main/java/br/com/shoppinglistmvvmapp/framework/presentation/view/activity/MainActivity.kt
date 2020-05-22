@@ -18,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity(){
+class MainActivity : AbstractActivity(){
 
     private var currentNavController: LiveData<NavController>? = null
 

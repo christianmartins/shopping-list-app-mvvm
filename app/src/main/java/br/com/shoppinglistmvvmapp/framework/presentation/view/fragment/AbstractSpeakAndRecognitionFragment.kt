@@ -11,7 +11,7 @@ import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
 
-abstract class BaseSpeakAndRecognitionFragment: BaseFragment(){
+abstract class AbstractSpeakAndRecognitionFragment: AbstractFragment(){
 
     private val recognitionUtils = RecognitionUtils()
     private var speakUtils: SpeakUtils? = null
@@ -23,7 +23,7 @@ abstract class BaseSpeakAndRecognitionFragment: BaseFragment(){
 
     override fun onMessageEvent(event: MessageEvent) {
         super.onMessageEvent(event)
-        if(GlobalUtils.fragmentAlive == this@BaseSpeakAndRecognitionFragment.javaClass.name) {
+        if(GlobalUtils.fragmentAlive == this@AbstractSpeakAndRecognitionFragment.javaClass.name) {
             when (event) {
                 is RecognitionOnResultEvent -> {
                     onRecognitionOnResultEvent(event)
