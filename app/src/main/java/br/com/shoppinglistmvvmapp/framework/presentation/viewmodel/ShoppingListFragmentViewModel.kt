@@ -5,6 +5,8 @@ import androidx.lifecycle.liveData
 import br.com.shoppinglistmvvmapp.data.mock.ShoppingListMock
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
 import br.com.shoppinglistmvvmapp.data.repository.ShoppingListRepository
+import br.com.shoppinglistmvvmapp.framework.presentation.mapper.ShoppingListMapper
+import br.com.shoppinglistmvvmapp.framework.presentation.model.ShoppingListPresentation
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import kotlinx.coroutines.Dispatchers
 
@@ -12,9 +14,13 @@ class ShoppingListFragmentViewModel: AbstractViewModel() {
 
     private val shoppingListRepository = ShoppingListRepository()
 
-    private val shoppingLists: LiveData<List<ShoppingList>> = liveData(Dispatchers.IO) {
+    private val shoppingLists: LiveData<List<ShoppingListPresentation>> = liveData(Dispatchers.IO) {
         fetchShoppingListsByUser()
-        emit(GlobalUtils.shoppingLists.toList())
+        emit(convertToPresentationList())
+    }
+
+    private fun convertToPresentationList() = GlobalUtils.shoppingLists.map {
+        ShoppingListMapper.convert(it)
     }
 
     fun createShoppingList(
@@ -30,7 +36,7 @@ class ShoppingListFragmentViewModel: AbstractViewModel() {
         return shoppingListRepository.sendAndRefreshShoppingList()
     }
 
-    fun getShoppingLists(): LiveData<List<ShoppingList>>{
+    fun getShoppingListPresentationList(): LiveData<List<ShoppingListPresentation>>{
         return shoppingLists
     }
 
