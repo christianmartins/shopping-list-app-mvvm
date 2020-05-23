@@ -5,7 +5,7 @@ import br.com.shoppinglistmvvmapp.framework.presentation.view.common.AbstractVie
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentListClickHandler
 
-class ShoppingListViewHolderMVVM(
+class ShoppingListViewHolder(
     private val itemBinding: ShoppingListViewHolderMvvmLayoutBinding,
     private val clickHandler: ShoppingFragmentListClickHandler
 ): AbstractViewHolder<ShoppingListPresentation>(itemBinding.root) {

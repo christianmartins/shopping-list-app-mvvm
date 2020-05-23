@@ -4,16 +4,17 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
-import br.com.shoppinglistmvvmapp.utils.RecognitionParams
-import br.com.shoppinglistmvvmapp.utils.RecognitionUtils
+import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionParams
+import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionUtils
 import br.com.shoppinglistmvvmapp.utils.event.MessageEvent
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnErrorEvent
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
 
 abstract class AbstractSpeakAndRecognitionFragment: AbstractFragment(){
 
-    private val recognitionUtils = RecognitionUtils()
+    private val recognitionUtils =
+        RecognitionUtils()
     private var speakUtils: SpeakUtils? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

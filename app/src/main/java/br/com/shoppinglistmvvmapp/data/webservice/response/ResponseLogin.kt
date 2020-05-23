@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.data.webservice.response
 
-import br.com.shoppinglistmvvmapp.data.model.User
+import br.com.shoppinglistmvvmapp.domain.model.User
 import com.google.gson.annotations.SerializedName
 
 data class ResponseLogin(

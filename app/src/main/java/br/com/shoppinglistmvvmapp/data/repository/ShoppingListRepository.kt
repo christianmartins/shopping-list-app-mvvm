@@ -1,7 +1,6 @@
 package br.com.shoppinglistmvvmapp.data.repository
 
-import androidx.lifecycle.LiveData
-import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.data.webservice.NetworkServiceProvider
 import br.com.shoppinglistmvvmapp.data.webservice.request.RequestSaveShoppingList
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils

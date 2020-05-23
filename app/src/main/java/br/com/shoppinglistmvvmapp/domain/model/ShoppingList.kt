@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.data.model
+package br.com.shoppinglistmvvmapp.domain.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

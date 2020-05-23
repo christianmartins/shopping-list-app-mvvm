@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.framework.util.interfaces
 
-import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 
 interface ShoppingFragmentListClickHandler {
     fun onClickItemList(shoppingListId: String)

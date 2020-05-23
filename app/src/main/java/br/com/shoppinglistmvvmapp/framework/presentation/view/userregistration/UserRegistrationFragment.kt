@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractFragment
-import br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.ShoppingListFragmentDirections
+import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.*
 import kotlinx.android.synthetic.main.user_registration_view_layout.*
 import kotlinx.coroutines.Dispatchers

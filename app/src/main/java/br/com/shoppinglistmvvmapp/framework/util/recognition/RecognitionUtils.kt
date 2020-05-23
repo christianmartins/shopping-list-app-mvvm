@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.utils
+package br.com.shoppinglistmvvmapp.framework.util.recognition
 
 import android.content.ComponentName
 import android.content.Context
@@ -8,6 +8,7 @@ import android.speech.SpeechRecognizer
 import br.com.shoppinglistmvvmapp.framework.App
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
+import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import java.util.*
 
 class RecognitionUtils {
@@ -60,7 +61,11 @@ class RecognitionUtils {
         App.context?.applicationContext?.let {
             if (SpeechRecognizer.isRecognitionAvailable(it)) {
                 initSpeechRecognizer()
-                speechRecognizer?.setRecognitionListener(RecognitionListener(recognitionParams))
+                speechRecognizer?.setRecognitionListener(
+                    RecognitionListener(
+                        recognitionParams
+                    )
+                )
                 speechRecognizer?.startListening(getSpeechIntent(it))
             } else {
                 SpeakUtils.dispatchOnErrorEvent(R.string.speech_error_could_not_start_speech_recognizer)

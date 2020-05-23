@@ -3,7 +3,7 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.itemshoppinglist
 import android.view.View
 import android.view.ViewGroup
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.BaseAdapter
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.BaseViewHolder

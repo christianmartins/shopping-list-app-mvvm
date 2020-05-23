@@ -3,8 +3,8 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.itemshoppinglist
 import android.view.View
 import android.widget.ImageView
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.data.model.BaseModel
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.BaseModel
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.changeColor
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setPaintFlagsStrikeThroughEffect
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.BaseViewHolder

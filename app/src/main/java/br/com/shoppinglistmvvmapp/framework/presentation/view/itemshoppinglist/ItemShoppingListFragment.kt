@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnErrorEvent
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
 import br.com.shoppinglistmvvmapp.framework.presentation.view.recognitionexplain.RecognitionExplainDialog
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractCollectionFragment

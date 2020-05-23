@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.framework.util.event
+package br.com.shoppinglistmvvmapp.framework.util.recognition.event
 
 import androidx.annotation.StringRes
 import br.com.shoppinglistmvvmapp.utils.event.MessageEvent

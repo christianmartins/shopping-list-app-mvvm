@@ -1,6 +1,6 @@
-package br.com.shoppinglistmvvmapp.framework.util.event
+package br.com.shoppinglistmvvmapp.framework.util.recognition.event
 
-import br.com.shoppinglistmvvmapp.utils.RecognitionParams
+import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionParams
 import br.com.shoppinglistmvvmapp.utils.event.MessageEvent
 
 class RecognitionOnResultEvent(

@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.data.mock
 
-import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.utils.DateUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
 

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import androidx.annotation.StringRes
 import br.com.shoppinglistmvvmapp.utils.DateUtils
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnErrorEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 

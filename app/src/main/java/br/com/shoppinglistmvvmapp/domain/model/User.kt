@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.data.model
+package br.com.shoppinglistmvvmapp.domain.model
 
 data class User(
     val id: Int,

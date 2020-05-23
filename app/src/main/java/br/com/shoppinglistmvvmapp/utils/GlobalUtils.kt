@@ -2,8 +2,8 @@ package br.com.shoppinglistmvvmapp.utils
 
 import br.com.shoppinglistmvvmapp.framework.App
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
-import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
 
 object GlobalUtils {

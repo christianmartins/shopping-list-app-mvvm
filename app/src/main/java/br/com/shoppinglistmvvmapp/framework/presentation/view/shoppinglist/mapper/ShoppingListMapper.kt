@@ -1,7 +1,7 @@
 package br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.mapper
 
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.data.model.ShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.framework.App
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.AbstractMapper
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation

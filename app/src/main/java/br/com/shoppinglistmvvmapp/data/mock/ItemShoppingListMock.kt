@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.data.mock
 
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.utils.DateUtils
 
 object ItemShoppingListMock {

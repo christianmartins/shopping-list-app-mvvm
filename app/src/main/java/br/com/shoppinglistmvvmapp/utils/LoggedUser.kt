@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.utils
 
-import br.com.shoppinglistmvvmapp.data.model.User
+import br.com.shoppinglistmvvmapp.domain.model.User
 
 object LoggedUser {
 

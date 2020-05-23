@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.utils
+package br.com.shoppinglistmvvmapp.framework.util.recognition
 
 import br.com.shoppinglistmvvmapp.framework.util.enum.ActionType
 

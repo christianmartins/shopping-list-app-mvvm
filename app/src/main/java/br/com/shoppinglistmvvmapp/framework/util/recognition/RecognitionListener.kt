@@ -1,10 +1,10 @@
-package br.com.shoppinglistmvvmapp.utils
+package br.com.shoppinglistmvvmapp.framework.util.recognition
 
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.SpeechRecognizer
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
 import org.greenrobot.eventbus.EventBus
 

@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.data.webservice.request
 
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
 import com.google.gson.annotations.SerializedName
 
 

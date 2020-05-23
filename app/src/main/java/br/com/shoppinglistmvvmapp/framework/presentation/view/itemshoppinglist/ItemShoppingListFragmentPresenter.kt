@@ -1,7 +1,7 @@
 package br.com.shoppinglistmvvmapp.framework.presentation.view.itemshoppinglist
 
 import br.com.shoppinglistmvvmapp.data.mock.ItemShoppingListMock
-import br.com.shoppinglistmvvmapp.data.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
 import br.com.shoppinglistmvvmapp.data.repository.ItemShoppingListRepository
 
 import br.com.shoppinglistmvvmapp.data.repository.ShoppingListRepository

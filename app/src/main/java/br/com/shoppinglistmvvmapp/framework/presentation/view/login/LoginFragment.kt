@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.framework.presentation.view.fragment
+package br.com.shoppinglistmvvmapp.framework.presentation.view.login
 
 import android.content.Context
 import android.os.Bundle
@@ -9,9 +9,10 @@ import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
+import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractFragment
+import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeText
 import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
-import br.com.shoppinglistmvvmapp.framework.presentation.view.old.presenter.LoginPresenter
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import kotlinx.android.synthetic.main.login_fragment_layout.*

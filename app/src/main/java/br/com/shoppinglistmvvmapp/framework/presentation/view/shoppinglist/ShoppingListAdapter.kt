@@ -10,21 +10,21 @@ import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentList
 class ShoppingListAdapter(
     private val clickHandler: ShoppingFragmentListClickHandler
 ): AbstractAdapter<
-        ShoppingListViewHolderMVVM,
+        ShoppingListViewHolder,
         ShoppingListViewHolderMvvmLayoutBinding,
         ShoppingListPresentation
         >() {
 
     override val layoutId: Int = R.layout.shopping_list_view_holder_mvvm_layout
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListViewHolderMVVM {
-        return ShoppingListViewHolderMVVM(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListViewHolder {
+        return ShoppingListViewHolder(
             getItemBinding(parent),
             clickHandler
         )
     }
 
-    override fun onBindViewHolder(holder: ShoppingListViewHolderMVVM, position: Int) {
+    override fun onBindViewHolder(holder: ShoppingListViewHolder, position: Int) {
         holder.setItem(list[position])
     }
 
