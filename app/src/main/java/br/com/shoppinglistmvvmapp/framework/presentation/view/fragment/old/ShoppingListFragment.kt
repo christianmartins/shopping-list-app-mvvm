@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
-import br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.AbstractCollectionFragment
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
 import br.com.shoppinglistmvvmapp.utils.extension.yesAnswer
 import br.com.shoppinglistmvvmapp.framework.presentation.view.old.presenter.ShoppingListFragmentPresenter

@@ -1,87 +1,58 @@
 package br.com.shoppinglistmvvmapp.framework.presentation.view.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
 import br.com.shoppinglistmvvmapp.databinding.ShoppingListMvvmLayoutBinding
 import br.com.shoppinglistmvvmapp.framework.presentation.model.ShoppingListPresentation
-import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
-import br.com.shoppinglistmvvmapp.utils.extension.yesAnswer
 import br.com.shoppinglistmvvmapp.framework.presentation.view.adapter.ShoppingListAdapterMVVM
+import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
 import br.com.shoppinglistmvvmapp.framework.presentation.viewmodel.ShoppingListFragmentViewModel
-import br.com.shoppinglistmvvmapp.utils.GlobalUtils
-import br.com.shoppinglistmvvmapp.utils.RecognitionParams
 import br.com.shoppinglistmvvmapp.framework.util.enum.ActionType
 import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentListClickHandler
+import br.com.shoppinglistmvvmapp.utils.GlobalUtils
+import br.com.shoppinglistmvvmapp.utils.RecognitionParams
+import br.com.shoppinglistmvvmapp.utils.extension.yesAnswer
 import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.android.synthetic.main.shopping_list_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ShoppingListFragmentMVVM: AbstractCollectionFragment(), ShoppingFragmentListClickHandler{
+class ShoppingListFragmentMVVM(
+) : AbstractCollectionMVVMFragment<ShoppingListMvvmLayoutBinding>(
+    R.layout.shopping_list_mvvm_layout
+), ShoppingFragmentListClickHandler{
 
-    //TODO CHANGE THAT! -> Inject dependency
-    private val viewModel by lazy {
-        ViewModelProvider(this).get(ShoppingListFragmentViewModel::class.java)
-    }
-
-    //TODO CHANGE THAT! -> Put in AbstractClass
-    private val adapter by lazy { ShoppingListAdapterMVVM(this) }
+    private val adapter: ShoppingListAdapterMVVM by lazy { ShoppingListAdapterMVVM(this) }
+    private val viewModel: ShoppingListFragmentViewModel by viewModel()
 
     //TODO CHANGE THAT! -> REMOVE!
     private var jobRefresh: Job? = null
 
-    //TODO CHANGE THAT! -> Put in AbstractClass
-    private lateinit var binding: ShoppingListMvvmLayoutBinding
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onObserveShoppingListChange()
+        onRefreshListener()
+    }
+
+    override fun initAdapter(){
+        binding.shoppingListRecyclerView.adapter = adapter
+    }
 
     //TODO CHANGE THAT! -> Put on Observable properties and put in value in layout and BindingAdapter the logic
     private fun isRefreshing(isRefresh: Boolean){
         activity?.runOnUiThread {shopping_list_swipe_refresh?.isRefreshing = isRefresh}
     }
 
-    //TODO CHANGE THAT! -> Put in AbstractClass Create binding!.
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        binding = getFragmentBinding(inflater, container)
-        getFab()?.setImageResource(R.drawable.ic_add_white_24dp)
-        return binding.root
-    }
-
-    //TODO CHANGE THAT! -> Put in AbstractClass.
-    private fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): ShoppingListMvvmLayoutBinding{
-         return ShoppingListMvvmLayoutBinding.inflate(inflater, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initAdapter()
-        initViewModel()
-        onRefreshListener()
-    }
-
-    //TODO CHANGE THAT! -> Put in AbstractClass
-    override fun initAdapter(){
-        binding.shoppingListRecyclerView.adapter = adapter
-    }
-
-    private fun initViewModel(){
+    private fun onObserveShoppingListChange(){
         viewModel.getShoppingListPresentationList().observe(viewLifecycleOwner, Observer { shoppingListPresentationList ->
             onShoppingListStateChange(shoppingListPresentationList)
         })
@@ -100,7 +71,7 @@ class ShoppingListFragmentMVVM: AbstractCollectionFragment(), ShoppingFragmentLi
     }
 
     //TODO CHANGE THAT! -> Put in AbstractClass?
-    private fun loadList(newList: List<ShoppingListPresentation> = viewModel.getOrderedItems()){
+    private fun loadList(newList: List<ShoppingListPresentation> = emptyList() /*viewModel.getOrderedItems()*/){
         activity?.runOnUiThread {
             try{
                 adapter.clear()
@@ -163,7 +134,7 @@ class ShoppingListFragmentMVVM: AbstractCollectionFragment(), ShoppingFragmentLi
     //TODO CHANGE THAT! -> REMOVE
     private fun addItemInAdapter(shoppingList: ShoppingList){
         GlobalUtils.shoppingLists.add(shoppingList)
-        adapter.add(shoppingList)
+//        adapter.add(shoppingList)
         empty_list.setEmptyList(adapter.itemCount)
     }
 
@@ -235,4 +206,7 @@ class ShoppingListFragmentMVVM: AbstractCollectionFragment(), ShoppingFragmentLi
             viewModel.sendShoppingList()
         }
     }
+
+    override fun initBindingProperties() {}
+
 }

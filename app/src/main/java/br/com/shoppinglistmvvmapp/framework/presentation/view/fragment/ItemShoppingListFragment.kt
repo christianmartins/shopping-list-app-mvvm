@@ -15,6 +15,7 @@ import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
 import br.com.shoppinglistmvvmapp.framework.presentation.view.adapter.ItemShoppingListAdapter
 import br.com.shoppinglistmvvmapp.framework.presentation.view.dialog.RecognitionExplainDialog
+import br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.old.AbstractCollectionFragment
 import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.android.synthetic.main.item_shopping_list_layout.*
 import kotlinx.coroutines.Dispatchers
