@@ -3,10 +3,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="vm"
+            type="br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListViewModel" />
+    </data>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/shopping_list_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/shopping_list_swipe_refresh">
+        app:onRefreshListener="@{() -> vm.fetch()}"
+        >
 
         <FrameLayout
             android:orientation="vertical"

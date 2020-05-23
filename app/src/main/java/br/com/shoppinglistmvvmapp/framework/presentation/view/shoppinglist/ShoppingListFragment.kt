@@ -6,24 +6,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.data.model.ShoppingList
 import br.com.shoppinglistmvvmapp.databinding.ShoppingListLayoutBinding
-import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractCollectionMVVMFragment
-import br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.ShoppingListFragmentDirections
-import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.runOnUiThread
+import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation
+import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.state.ShoppingListViewState
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
 import br.com.shoppinglistmvvmapp.framework.util.enum.ActionType
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnErrorEvent
-import br.com.shoppinglistmvvmapp.framework.util.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentListClickHandler
+import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionParams
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
+import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
-import br.com.shoppinglistmvvmapp.utils.RecognitionParams
 import br.com.shoppinglistmvvmapp.utils.extension.yesAnswer
 import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,26 +30,32 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
     R.layout.shopping_list_layout
 ), ShoppingFragmentListClickHandler{
 
-    private val adapter: ShoppingListAdapter by lazy {
-        ShoppingListAdapter(
-            this
-        )
-    }
     private val viewModel: ShoppingListViewModel by viewModel()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onObserveShoppingListChange()
-        onRefreshListener()
+    private val adapter: ShoppingListAdapter by lazy {
+        ShoppingListAdapter(this)
     }
 
     override fun initAdapter(){
         binding.shoppingListRecyclerView.adapter = adapter
     }
 
-    private fun onObserveShoppingListChange(){
-        viewModel.getShoppingListPresentationList().observe(viewLifecycleOwner, Observer { shoppingListPresentationList ->
-            onShoppingListStateChange(shoppingListPresentationList)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onObserveShoppingListState()
+    }
+
+    private fun onObserveShoppingListState(){
+        viewModel.shoppingListViewState.observe(viewLifecycleOwner, Observer { state ->
+            when(state){
+                is ShoppingListViewState.Loading -> isRefreshing()
+                is ShoppingListViewState.Error -> {
+                    isRefreshing(false)
+                }
+                is ShoppingListViewState.Success -> {
+                    addListInAdapter(state.shoppingListPresentationList)
+                }
+            }
         })
     }
 
@@ -65,29 +69,15 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
         }
     }
 
-    //TODO CHANGE THAT! -> REMOVE!
-    private var jobRefresh: Job? = null
-
     //TODO CHANGE THAT! -> Put on Observable properties and put in value in layout and BindingAdapter the logic
-    private fun isRefreshing(isRefresh: Boolean){
+    private fun isRefreshing(isRefresh: Boolean = true){
         safeRunOnUiThread {
             binding.shoppingListSwipeRefresh.isRefreshing = isRefresh
         }
     }
 
-    private fun onShoppingListStateChange(shoppingListPresentationList: List<ShoppingListPresentation>){
-        //TODO CHANGE THAT! -> Insert States
-        loadList(shoppingListPresentationList)
-    }
-
-    //TODO CHANGE THAT! -> Call fetch change state to loading! onSuccess/Failed update list
-    private suspend fun loadListAsync(){
-        isRefreshing(true)
-        viewModel.fetchShoppingListsByUser()
-    }
-
     //TODO CHANGE THAT! -> Put in AbstractClass?
-    private fun loadList(newList: List<ShoppingListPresentation> = emptyList() /*viewModel.getOrderedItems()*/){
+    private fun addListInAdapter(newList: List<ShoppingListPresentation> = emptyList() /*viewModel.getOrderedItems()*/){
         safeRunOnUiThread(
             onRun = {
                 adapter.clear()
@@ -99,26 +89,6 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
                 isRefreshing(false)
             }
         )
-    }
-
-    //TODO CHANGE THAT! -> I have to think
-    private fun onRefreshListener(){
-        runOnUiThread {
-            binding.shoppingListSwipeRefresh.setOnRefreshListener {
-                if(jobRefresh?.isActive == true)
-                    jobRefresh?.cancel()
-
-                jobRefresh = lifecycleScope.launch(Dispatchers.IO) {
-                    refresh()
-                }
-            }
-        }
-    }
-
-    //TODO CHANGE THAT! -> CHANGE LOGIC!
-    private suspend fun refresh(){
-        viewModel.sendShoppingList()
-        loadListAsync()
     }
 
     //TODO CHANGE THAT! -> Insert States
@@ -133,7 +103,11 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
                 val shoppingList = viewModel.createShoppingList(bestResult)
                 addItemInAdapter(shoppingList)
 
-                val params = RecognitionParams(ActionType.REDIRECT_TO_ITEM_SHOPPING_LIST, shoppingList.id)
+                val params =
+                    RecognitionParams(
+                        ActionType.REDIRECT_TO_ITEM_SHOPPING_LIST,
+                        shoppingList.id
+                    )
                 speakOkAndMore(
                     R.string.shopping_list_redirect_to_item_shopping_list,
                     onSpeakDone = { startRecognition(params) }
@@ -207,6 +181,8 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
         speak(event.errorMessageStringRes)
     }
 
-    override fun initBindingProperties() {}
+    override fun initBindingProperties() {
+        binding.vm = viewModel
+    }
 
 }
