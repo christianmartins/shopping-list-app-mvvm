@@ -58,68 +58,85 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.0-rc01'
+    implementation 'androidx.core:core-ktx:1.4.0-alpha01'
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"
 
     //AppCompat
-    implementation 'androidx.appcompat:appcompat:1.2.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.3.0-alpha01'
+
+    //ConstraintLayout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta6'
-    //Test
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+
     //GSON
     implementation 'com.google.code.gson:gson:2.8.6'
-//    //Room
-//    kapt 'androidx.room:room-compiler:2.2.5'
-//    implementation 'androidx.room:room-ktx:2.2.5'
-//    implementation 'androidx.room:room-runtime:2.2.5'
+
+    //Room
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6'
+
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
     implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
 
+    //Material Design
     implementation 'com.google.android.material:material:1.2.0-alpha06'
+
+    //CardView
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //Paging
     implementation 'androidx.paging:paging-runtime:2.1.2'
 
+    //Stetho
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
+    //EnvetBus
     implementation 'org.greenrobot:eventbus:3.2.0'
 
+    //Joda
     implementation 'joda-time:joda-time:2.10.6'
 
+    //SwipeRefreshLayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    //MVVM
+
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-    //databinding
-    kapt 'com.android.databinding:compiler:3.2.0-alpha10'
-    //RXJAVA
-    implementation "io.reactivex.rxjava3:rxjava:3.0.3"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    //Dagger
-//    // JAX-B dependencies for JDK 9+
-//    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
-    // If you're using Kotlin
+
+    //Koin
+    implementation "org.koin:koin-core:$koin_version"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+
     kapt "com.sun.xml.bind:jaxb-core:2.3.0.1"
     kapt "javax.xml.bind:jaxb-api:2.4.0-b180830.0359"
     kapt "com.sun.xml.bind:jaxb-impl:2.3.2"
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    //Test
+    testImplementation 'junit:junit:4.13'
+
+    //Instrumental test
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
