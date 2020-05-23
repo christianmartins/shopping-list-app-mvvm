@@ -7,7 +7,7 @@
     <data>
         <variable
             name="shoppingListPresentation"
-            type="br.com.shoppinglistmvvmapp.framework.presentation.model.ShoppingListPresentation"
+            type="br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation"
         />
     </data>
 

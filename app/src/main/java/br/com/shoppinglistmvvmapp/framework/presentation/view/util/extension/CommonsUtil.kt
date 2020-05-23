@@ -3,20 +3,40 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension
 import android.os.Handler
 import android.os.Looper
 
-fun safeRunOnUiThread(run: () -> Unit){
+
+fun safeRunOnUiThread(onRun: () -> Unit) {
+    safeRunOnUiThread(onRun, null, null)
+}
+
+fun safeRunOnUiThread(
+    onRun: () -> Unit,
+    onError: ((exception: Exception) -> Unit)? = null,
+    onCompletion: (()-> Unit)? = null
+){
     runOnUiThread{
-        safeRun(run)
+        safeRun(onRun, onError, onCompletion)
     }
 }
 
-fun runOnUiThread(run: () -> Unit){
-    Handler(Looper.getMainLooper()).post(run)
+fun safeRun(onRun: () -> Unit){
+    safeRun(onRun, null, null)
 }
 
-fun safeRun(run: ()-> Unit){
+fun safeRun(
+    onRun: () -> Unit,
+    onError: ((exception: Exception) -> Unit)? = null,
+    onCompletion: (()-> Unit)? = null
+){
     try{
-        run()
+        onRun()
     }catch (e: Exception){
         e.printStackTrace()
+        onError?.invoke(e)
+    }finally {
+        onCompletion?.invoke()
     }
+}
+
+fun runOnUiThread(onRun: () -> Unit){
+    Handler(Looper.getMainLooper()).post(onRun)
 }

@@ -1,6 +1,6 @@
 package br.com.shoppinglistmvvmapp.di.module
 
-import br.com.shoppinglistmvvmapp.framework.presentation.viewmodel.ShoppingListFragmentViewModel
+import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListViewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
@@ -8,6 +8,6 @@ val viewModelModule = module {
 }
 
 fun provideShoppingListFragmentViewModel(
-): ShoppingListFragmentViewModel {
-    return ShoppingListFragmentViewModel()
+): ShoppingListViewModel {
+    return ShoppingListViewModel()
 }

@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.ShoppingListFragment"
+        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragment"
         android:label="ShoppingListFragment"
         tools:layout="@layout/shopping_list_layout"
         >
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/itemShoppingListFragment"
-        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.ItemShoppingListFragment"
+        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.itemshoppinglist.ItemShoppingListFragment"
         tools:layout="@layout/item_shopping_list_layout"
         android:label="ItemShoppingListFragment" >
         <argument
@@ -35,7 +35,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.LoginFragment"
+        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.login.LoginFragment"
         tools:layout="@layout/login_fragment_layout"
         android:label="LoginFragment" >
         <action
@@ -48,7 +48,7 @@
 
     <fragment
         android:id="@+id/userRegistrationView"
-        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.UserRegistrationFragment"
+        android:name="br.com.shoppinglistmvvmapp.framework.presentation.view.userregistration.UserRegistrationFragment"
         android:label="UserRegistrationView"
         tools:layout="@layout/user_registration_view_layout"
         >
