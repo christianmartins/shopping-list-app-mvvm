@@ -4,9 +4,4 @@
         android:id="@+id/shoppingListFragment"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/home_navigation"/>
-
-    <item
-        android:id="@+id/shoppingListFragmentMVVM"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/home_navigation_mvvm"/>
 </menu>

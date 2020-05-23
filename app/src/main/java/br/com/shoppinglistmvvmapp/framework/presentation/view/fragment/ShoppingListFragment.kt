@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.data.model.ShoppingList
-import br.com.shoppinglistmvvmapp.databinding.ShoppingListMvvmLayoutBinding
+import br.com.shoppinglistmvvmapp.databinding.ShoppingListLayoutBinding
 import br.com.shoppinglistmvvmapp.framework.presentation.model.ShoppingListPresentation
-import br.com.shoppinglistmvvmapp.framework.presentation.view.adapter.ShoppingListAdapterMVVM
+import br.com.shoppinglistmvvmapp.framework.presentation.view.adapter.ShoppingListAdapter
+import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
 import br.com.shoppinglistmvvmapp.framework.presentation.viewmodel.ShoppingListFragmentViewModel
 import br.com.shoppinglistmvvmapp.framework.util.enum.ActionType
@@ -26,16 +28,12 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ShoppingListFragmentMVVM(
-) : AbstractCollectionMVVMFragment<ShoppingListMvvmLayoutBinding>(
-    R.layout.shopping_list_mvvm_layout
+class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBinding>(
+    R.layout.shopping_list_layout
 ), ShoppingFragmentListClickHandler{
 
-    private val adapter: ShoppingListAdapterMVVM by lazy { ShoppingListAdapterMVVM(this) }
+    private val adapter: ShoppingListAdapter by lazy { ShoppingListAdapter(this) }
     private val viewModel: ShoppingListFragmentViewModel by viewModel()
-
-    //TODO CHANGE THAT! -> REMOVE!
-    private var jobRefresh: Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,15 +45,28 @@ class ShoppingListFragmentMVVM(
         binding.shoppingListRecyclerView.adapter = adapter
     }
 
-    //TODO CHANGE THAT! -> Put on Observable properties and put in value in layout and BindingAdapter the logic
-    private fun isRefreshing(isRefresh: Boolean){
-        activity?.runOnUiThread {shopping_list_swipe_refresh?.isRefreshing = isRefresh}
-    }
-
     private fun onObserveShoppingListChange(){
         viewModel.getShoppingListPresentationList().observe(viewLifecycleOwner, Observer { shoppingListPresentationList ->
             onShoppingListStateChange(shoppingListPresentationList)
         })
+    }
+
+    private fun navigateToItemsShoppingListFragment(shoppingListId: String){
+        safeRunOnUiThread {
+            findNavController().navigate(
+                ShoppingListFragmentDirections.actionShoppingListFragmentToItemShoppingListFragment(
+                    shoppingListId
+                )
+            )
+        }
+    }
+
+    //TODO CHANGE THAT! -> REMOVE!
+    private var jobRefresh: Job? = null
+
+    //TODO CHANGE THAT! -> Put on Observable properties and put in value in layout and BindingAdapter the logic
+    private fun isRefreshing(isRefresh: Boolean){
+        activity?.runOnUiThread {shopping_list_swipe_refresh?.isRefreshing = isRefresh}
     }
 
     private fun onShoppingListStateChange(shoppingListPresentationList: List<ShoppingListPresentation>){
@@ -138,28 +149,23 @@ class ShoppingListFragmentMVVM(
         empty_list.setEmptyList(adapter.itemCount)
     }
 
-    override fun onClickFloatingButton(){
-        stopAll()
-        speak(
-            R.string.text_to_speech_title_shopping_list,
-            onSpeakDone = {
-                startRecognition()
-            }
-        )
+    private fun updateTitle(newValue: String, shoppingList: ShoppingList){
+        viewModel.updateTitle(newValue, shoppingList)
+        //TODO CHANGE THAT! -> REMOVE
+        adapter.notifyDataSetChanged()
     }
 
-    private fun navigateToItemsShoppingListFragment(shoppingListId: String){
-//        activity?.runOnUiThread {
-//            findNavController().navigate(
-//                ShoppingListFragmentMVVMDirections.actionShoppingListFragmentToItemShoppingListFragment(
-//                    shoppingListId
-//                )
-//            )
-//        }
+    //TODO CHANGE THAT! -> CHANGE, CHANGE, PLS CHANGE! XD
+    override fun onPause() {
+        sendShoppingList()
+        super.onPause()
     }
 
-    override fun onClickItemList(shoppingListId: String) {
-        navigateToItemsShoppingListFragment(shoppingListId)
+    //TODO CHANGE THAT! -> PUT ON CREATE/DELETE/UPDATE LIST STATE AND ADD IN WORKER!
+    private fun sendShoppingList(){
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.sendShoppingList()
+        }
     }
 
     //TODO ??? THAT! ->
@@ -188,23 +194,19 @@ class ShoppingListFragmentMVVM(
         )
     }
 
-    private fun updateTitle(newValue: String, shoppingList: ShoppingList){
-        viewModel.updateTitle(newValue, shoppingList)
-        //TODO CHANGE THAT! -> REMOVE
-        adapter.notifyDataSetChanged()
+    override fun onClickFloatingButton(){
+        stopAll()
+        speak(
+            R.string.text_to_speech_title_shopping_list,
+            onSpeakDone = {
+                startRecognition()
+            }
+        )
     }
 
-    //TODO CHANGE THAT! -> CHANGE, CHANGE, PLS CHANGE! XD
-    override fun onPause() {
-        sendShoppingList()
-        super.onPause()
-    }
 
-    //TODO CHANGE THAT! -> PUT ON CREATE/DELETE/UPDATE LIST STATE AND ADD IN WORKER!
-    private fun sendShoppingList(){
-        lifecycleScope.launch(Dispatchers.IO) {
-            viewModel.sendShoppingList()
-        }
+    override fun onClickItemList(shoppingListId: String) {
+        navigateToItemsShoppingListFragment(shoppingListId)
     }
 
     override fun initBindingProperties() {}

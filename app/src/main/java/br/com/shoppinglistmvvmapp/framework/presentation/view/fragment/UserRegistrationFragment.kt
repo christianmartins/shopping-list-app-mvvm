@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.old.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.old.presenter.UserRegistrationPresenter
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.*
 import kotlinx.android.synthetic.main.user_registration_view_layout.*

@@ -38,17 +38,6 @@
             android:layout_marginEnd="@dimen/margin_float_action_button"
             android:layout_marginBottom="@dimen/margin_float_action_button"
             />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_redirect_to_mvvm"
-            android:visibility="visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_wb_sunny_white_24dp"
-            android:layout_gravity="start|bottom"
-            android:layout_marginEnd="@dimen/margin_float_action_button"
-            android:layout_marginBottom="@dimen/margin_float_action_button"
-            />
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

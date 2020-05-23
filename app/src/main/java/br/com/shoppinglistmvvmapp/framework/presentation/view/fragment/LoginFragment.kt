@@ -9,7 +9,6 @@ import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.framework.presentation.view.fragment.old.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeText
 import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
 import br.com.shoppinglistmvvmapp.framework.presentation.view.old.presenter.LoginPresenter

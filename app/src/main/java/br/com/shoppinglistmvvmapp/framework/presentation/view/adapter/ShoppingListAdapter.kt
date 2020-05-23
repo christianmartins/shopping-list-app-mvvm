@@ -7,7 +7,7 @@ import br.com.shoppinglistmvvmapp.framework.presentation.model.ShoppingListPrese
 import br.com.shoppinglistmvvmapp.framework.presentation.view.viewholder.ShoppingListViewHolderMVVM
 import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentListClickHandler
 
-class ShoppingListAdapterMVVM(
+class ShoppingListAdapter(
     private val clickHandler: ShoppingFragmentListClickHandler
 ): AbstractAdapter<
     ShoppingListViewHolderMVVM,
