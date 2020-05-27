@@ -4,85 +4,85 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.edit
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.databinding.LoginFragmentLayoutBinding
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractDataBindingFragment
+import br.com.shoppinglistmvvmapp.framework.presentation.view.login.state.LoginViewState
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragmentDirections
-import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeText
+import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeTextWithTrim
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
-import kotlinx.android.synthetic.main.login_fragment_layout.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.layout.login_fragment_layout) {
 
-    private val presenter by lazy {
-        LoginPresenter()
-    }
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         hideFabAndBottomNav()
         super.onViewCreated(view, savedInstanceState)
-        visitorEnterClick()
-        login()
         setPreferenceData()
-        onClickButtonUserRegister()
+        onLoginClick()
+        onUserRegisterClick()
+        onVisitorClick()
+        onLoginState()
     }
 
-    private fun login(){
-        login_enter.setOnClickListener {
-            context?.let {
-                val alertDialog = showProgressBarDialog(it)
-                val email = getEmail()
-                val password = getPassword()
-
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val isSuccess = presenter.loginAsync(email, password)
-                    onFinishLoginRequest(isSuccess)
-                    activity?.runOnUiThread { alertDialog.hide() }
+    private fun onLoginState(){
+        viewModel.loginViewState.observe(viewLifecycleOwner, Observer {state ->
+            with(binding){
+                progress.isVisible = false
+                when(state){
+                    is LoginViewState.Loading -> {
+                        progress.isVisible = true
+                    }
+                    is LoginViewState.Success -> {
+                        savePreferenceData()
+                        navigateToShoppingListFragment()
+                    }
+                    is LoginViewState.Error -> {
+                        viewUtil.showMessage(R.string.generic_dialog_title, R.string.login_error)
+                    }
                 }
             }
+        })
+    }
+
+    private fun onLoginClick(){
+        binding.loginEnter.setOnClickListener {
+            viewModel.login(getEmail(), getPassword())
         }
     }
 
     private fun getEmail(): String{
-        return login_edit_text_email?.getSafeText().nonNullable().trim()
+        return binding.loginEditTextEmail.getSafeTextWithTrim()
     }
 
     private fun getPassword(): String{
-        return  login_edit_text_passowrd?.getSafeText().nonNullable().trim()
+        return binding.loginEditTextPassowrd.getSafeTextWithTrim()
     }
 
-    private fun onFinishLoginRequest(isSuccess: Boolean){
-        if(isSuccess){
-            savePreferenceData()
-            navigateToShoppingListFragment()
-        }else{
-            showMessage(R.string.generic_dialog_title, R.string.login_error)
-        }
-    }
-
-    private fun visitorEnterClick(){
-        visitor_enter.setOnClickListener {
+    private fun onVisitorClick(){
+        binding.visitorEnter.setOnClickListener {
             LoggedUser.clear()
             navigateToShoppingListFragment()
         }
     }
 
     private fun setPreferenceData(){
-        with(activity?.getSharedPreferences("login", Context.MODE_PRIVATE)) {
-            login_edit_text_email?.setText(this?.getString("email", "").nonNullable())
-            login_edit_text_passowrd?.setText(this?.getString("clearTextPassword", "").nonNullable())
+        with(context?.getSharedPreferences("login", Context.MODE_PRIVATE)) {
+            binding.loginEditTextEmail.setText(this?.getString("email", "").nonNullable())
+            binding.loginEditTextPassowrd.setText(this?.getString("clearTextPassword", "").nonNullable())
         }
     }
 
     private fun savePreferenceData(){
-        activity?.getSharedPreferences("login", Context.MODE_PRIVATE).run {
+        context?.getSharedPreferences("login", Context.MODE_PRIVATE).run {
             this?.edit {
                 putString("email", getEmail())
                 putString("clearTextPassword", getPassword())
@@ -98,8 +98,8 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
         }
     }
 
-    private fun onClickButtonUserRegister(){
-        login_redirect_to_user_register?.setOnClickListener {
+    private fun onUserRegisterClick(){
+        binding.loginRedirectToUserRegister.setOnClickListener {
             navigateToUserRegister()
         }
     }
@@ -111,7 +111,5 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
         }
     }
 
-    override fun initBindingProperties() {
-        TODO("Not yet implemented")
-    }
+    override fun initBindingProperties() {}
 }

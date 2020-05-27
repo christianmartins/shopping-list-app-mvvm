@@ -23,7 +23,9 @@
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-            <include layout="@layout/_empty_list_layout" />
+            <include
+                android:id="@+id/item_shopping_list_empty_list"
+                layout="@layout/_empty_list_layout" />
 
         </FrameLayout>
 

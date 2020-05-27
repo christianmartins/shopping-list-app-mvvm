@@ -44,20 +44,20 @@ class UserRegistrationFragment : AbstractFragment() {
     private fun registerUser(){
         if(validateFields()){
             context?.let {
-                val alertDialog = showProgressBarDialog(it)
+                val alertDialog = viewUtil.showProgressBarDialog(it)
 
                 lifecycleScope.launch(Dispatchers.IO) {
                     val isSuccess = presenter.registerUser(getEmail(), getPassword(), getFirstName(), getLastName())
                     activity?.runOnUiThread { alertDialog.hide() }
 
                     if(isSuccess) {
-                        showMessage(R.string.generic_dialog_title, R.string.user_registration_view_register_is_success, onOkClick = {
+                        viewUtil.showMessage(R.string.generic_dialog_title, R.string.user_registration_view_register_is_success, onOkClick = {
                             activity?.runOnUiThread {
                                 onSuccess(it)
                             }
                         })
                     }else{
-                        showMessage(R.string.generic_dialog_title, R.string.user_registration_view_register_not_is_success)
+                        viewUtil.showMessage(R.string.generic_dialog_title, R.string.user_registration_view_register_not_is_success)
                     }
                 }
             }
@@ -65,7 +65,7 @@ class UserRegistrationFragment : AbstractFragment() {
     }
 
     private fun onSuccess(context: Context){
-        val alertDialog= showProgressBarDialog(context)
+        val alertDialog= viewUtil.showProgressBarDialog(context)
 
         lifecycleScope.launch(Dispatchers.IO) {
             val isSuccess = presenter.loginAsync(getEmail(), getPassword())

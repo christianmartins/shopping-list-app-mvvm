@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -11,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import br.com.shoppinglistmvvmapp.R
+import br.com.shoppinglistmvvmapp.databinding.ActivityMainBinding
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.AbstractActivity
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setupBottomNavigationBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,21 +22,25 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AbstractActivity(){
 
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(LayoutInflater.from(this))
+    }
+
     private var currentNavController: LiveData<NavController>? = null
 
     val fab by lazy {
-        findViewById<FloatingActionButton?>(R.id.fab)
+        binding.fab
     }
 
     val bottomNavigationMenu by lazy {
-        findViewById<BottomNavigationView?>(R.id.bottom_app_bar)
+        binding.bottomAppBar
     }
 
     private val permissionRecordAudioCode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
         hideActionBar()
 
         if (savedInstanceState == null) {
@@ -54,7 +60,7 @@ class MainActivity : AbstractActivity(){
     }
 
     private fun onBottomNavigationMenuItemReselect(){
-        bottom_app_bar.setOnNavigationItemReselectedListener { menuItem ->
+        binding.bottomAppBar.setOnNavigationItemReselectedListener { menuItem ->
             findNavController(R.id.nav_host_container).navigate(menuItem.itemId)
         }
     }

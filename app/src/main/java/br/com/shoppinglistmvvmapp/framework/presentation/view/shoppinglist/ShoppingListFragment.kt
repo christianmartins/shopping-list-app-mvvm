@@ -128,7 +128,7 @@ class ShoppingListFragment : AbstractCollectionFragment<ShoppingListLayoutBindin
 
     //TODO CHANGE THAT! -> Put on another layer
     override fun onClickEditItemList(shoppingList: ShoppingList) {
-        editMessage(
+        viewUtil.editMessage(
             resStringTitle = R.string.shopping_list_edit_item,
             resStringHint = R.string.shopping_list_hint_dialog,
             text = shoppingList.title,
@@ -157,7 +157,7 @@ class ShoppingListFragment : AbstractCollectionFragment<ShoppingListLayoutBindin
     }
 
     override fun onClickDeleteItemList(shoppingList: ShoppingList) {
-        yesConfirmMessage(
+        viewUtil.yesConfirmMessage(
             resStringMessage = R.string.shopping_list_delete_item,
             onYesClick = {
                 viewModel.deleteItem(shoppingList)
