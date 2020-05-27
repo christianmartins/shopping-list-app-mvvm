@@ -14,8 +14,6 @@ import br.com.shoppinglistmvvmapp.framework.presentation.view.login.state.LoginV
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeTextWithTrim
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
-import br.com.shoppinglistmvvmapp.utils.GlobalUtils
-import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,12 +26,10 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
         super.onViewCreated(view, savedInstanceState)
         setPreferenceData()
         onLoginClick()
-        onUserRegisterClick()
-        onVisitorClick()
-        onLoginState()
+        onObserverLoginState()
     }
 
-    private fun onLoginState(){
+    private fun onObserverLoginState(){
         viewModel.loginViewState.observe(viewLifecycleOwner, Observer {state ->
             with(binding){
                 progress.isVisible = false
@@ -48,6 +44,13 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
                     is LoginViewState.Error -> {
                         viewUtil.showMessage(R.string.generic_dialog_title, R.string.login_error)
                     }
+                    is LoginViewState.ToVisitor ->  {
+                        navigateToShoppingListFragment()
+                    }
+                    is LoginViewState.ToUserRegister -> {
+                        navigateToUserRegister()
+                    }
+                    is LoginViewState.None -> {}
                 }
             }
         })
@@ -56,21 +59,6 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
     private fun onLoginClick(){
         binding.loginEnter.setOnClickListener {
             viewModel.login(getEmail(), getPassword())
-        }
-    }
-
-    private fun getEmail(): String{
-        return binding.loginEditTextEmail.getSafeTextWithTrim()
-    }
-
-    private fun getPassword(): String{
-        return binding.loginEditTextPassowrd.getSafeTextWithTrim()
-    }
-
-    private fun onVisitorClick(){
-        binding.visitorEnter.setOnClickListener {
-            LoggedUser.clear()
-            navigateToShoppingListFragment()
         }
     }
 
@@ -93,23 +81,27 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
 
     private fun navigateToShoppingListFragment(){
         safeRunOnUiThread {
-            GlobalUtils.clearLists()
             findNavController().navigate(ShoppingListFragmentDirections.actionGlobalShoppingListFragment())
-        }
-    }
-
-    private fun onUserRegisterClick(){
-        binding.loginRedirectToUserRegister.setOnClickListener {
-            navigateToUserRegister()
+            viewModel.clearState()
         }
     }
 
     private fun navigateToUserRegister(){
         safeRunOnUiThread {
-            GlobalUtils.clearLists()
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToUserRegistrationView())
+            viewModel.clearState()
         }
     }
 
-    override fun initBindingProperties() {}
+    private fun getEmail(): String{
+        return binding.loginEditTextEmail.getSafeTextWithTrim()
+    }
+
+    private fun getPassword(): String{
+        return binding.loginEditTextPassowrd.getSafeTextWithTrim()
+    }
+
+    override fun initBindingProperties() {
+        binding.vm = viewModel
+    }
 }

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="br.com.shoppinglistmvvmapp.framework.presentation.view.login.LoginViewModel" />
     </data>
 
     <ScrollView
@@ -64,7 +66,8 @@
                         android:layout_gravity="end|top"
                         android:layout_marginEnd="8dp"
                         android:background="@color/colorAccent"
-                        android:src="@drawable/ic_add_white_24dp" />
+                        android:src="@drawable/ic_add_white_24dp"
+                        android:onClick="@{()-> vm.onRegisterClick()}"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/login_text_input_email"
@@ -114,7 +117,9 @@
                     android:text="@string/visitor_enter"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/margin_default"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:onClick="@{()-> vm.onVisitorClick()}"
+                    />
 
                 <ProgressBar
                     android:id="@+id/progress"
