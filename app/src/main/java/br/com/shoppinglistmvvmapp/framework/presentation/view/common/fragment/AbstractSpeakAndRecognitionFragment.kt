@@ -1,17 +1,23 @@
 package br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment
 
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.databinding.ViewDataBinding
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionParams
 import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionUtils
-import br.com.shoppinglistmvvmapp.utils.event.MessageEvent
 import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
 import br.com.shoppinglistmvvmapp.framework.util.speak.SpeakUtils
+import br.com.shoppinglistmvvmapp.utils.GlobalUtils
+import br.com.shoppinglistmvvmapp.utils.event.MessageEvent
 
-abstract class AbstractSpeakAndRecognitionFragment: AbstractFragment(){
+abstract class AbstractSpeakAndRecognitionFragment<Binding: ViewDataBinding>(
+    @LayoutRes private val layoutId: Int
+): AbstractDataBindingFragment<Binding>(
+    layoutId
+) {
 
     private val recognitionUtils =
         RecognitionUtils()

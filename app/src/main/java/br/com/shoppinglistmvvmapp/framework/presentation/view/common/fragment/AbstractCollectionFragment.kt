@@ -2,16 +2,20 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment
 
 import android.os.Bundle
 import android.view.View
-import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractSpeakAndRecognitionFragment
+import androidx.annotation.LayoutRes
+import androidx.databinding.ViewDataBinding
 
-abstract class AbstractCollectionFragment: AbstractSpeakAndRecognitionFragment() {
-
-    abstract fun initAdapter()
+abstract class AbstractCollectionFragment<Binding: ViewDataBinding>(
+    @LayoutRes private val layoutId: Int
+): AbstractSpeakAndRecognitionFragment<Binding>(
+    layoutId
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showFabAndBottomNav()
         myFabOnClickListener()
+        initAdapter()
     }
 
     private fun myFabOnClickListener(){
@@ -21,4 +25,6 @@ abstract class AbstractCollectionFragment: AbstractSpeakAndRecognitionFragment()
     }
 
     abstract fun onClickFloatingButton ()
+    abstract fun initAdapter()
+
 }

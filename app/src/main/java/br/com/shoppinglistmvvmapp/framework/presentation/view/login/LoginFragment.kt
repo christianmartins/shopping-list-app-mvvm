@@ -2,35 +2,31 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.login
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
-import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractFragment
+import br.com.shoppinglistmvvmapp.databinding.LoginFragmentLayoutBinding
+import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractDataBindingFragment
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeText
-import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
+import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
+import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
 import kotlinx.android.synthetic.main.login_fragment_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginFragment: AbstractFragment() {
+class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.layout.login_fragment_layout) {
 
     private val presenter by lazy {
         LoginPresenter()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        hideFabAndBottomNav()
-        return inflater.inflate(R.layout.login_fragment_layout, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        hideFabAndBottomNav()
         super.onViewCreated(view, savedInstanceState)
         visitorEnterClick()
         login()
@@ -96,7 +92,7 @@ class LoginFragment: AbstractFragment() {
     }
 
     private fun navigateToShoppingListFragment(){
-        activity?.runOnUiThread {
+        safeRunOnUiThread {
             GlobalUtils.clearLists()
             findNavController().navigate(ShoppingListFragmentDirections.actionGlobalShoppingListFragment())
         }
@@ -109,9 +105,13 @@ class LoginFragment: AbstractFragment() {
     }
 
     private fun navigateToUserRegister(){
-        activity?.runOnUiThread {
+        safeRunOnUiThread {
             GlobalUtils.clearLists()
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToUserRegistrationView())
         }
+    }
+
+    override fun initBindingProperties() {
+        TODO("Not yet implemented")
     }
 }

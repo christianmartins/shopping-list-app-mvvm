@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.shoppinglistmvvmapp.R
 import br.com.shoppinglistmvvmapp.databinding.ShoppingListLayoutBinding
 import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
-import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractCollectionMVVMFragment
+import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractCollectionFragment
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.state.ShoppingListViewState
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
@@ -23,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBinding>(
+class ShoppingListFragment : AbstractCollectionFragment<ShoppingListLayoutBinding>(
     R.layout.shopping_list_layout
 ), ShoppingFragmentListClickHandler{
 

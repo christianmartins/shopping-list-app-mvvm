@@ -1,30 +1,30 @@
 package br.com.shoppinglistmvvmapp.framework.presentation.view.itemshoppinglist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import br.com.shoppinglistmvvmapp.R
+import br.com.shoppinglistmvvmapp.databinding.ItemShoppingListLayoutBinding
 import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
+import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractCollectionFragment
+import br.com.shoppinglistmvvmapp.framework.presentation.view.recognitionexplain.RecognitionExplainDialog
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.setEmptyList
-import br.com.shoppinglistmvvmapp.utils.LoggedUser
+import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
 import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
-import br.com.shoppinglistmvvmapp.framework.util.interfaces.ItemShoppingListListeners
-import br.com.shoppinglistmvvmapp.framework.presentation.view.recognitionexplain.RecognitionExplainDialog
-import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.AbstractCollectionFragment
+import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.android.synthetic.main.item_shopping_list_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
-class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListListeners {
+class ItemShoppingListFragment: AbstractCollectionFragment<ItemShoppingListLayoutBinding>(
+        R.layout.shopping_list_layout
+), ItemShoppingListListeners {
 
-    private val presenter by lazy {
-        ItemShoppingListFragmentPresenter()
-    }
+    private val viewModel: ItemShoppingListViewModel by inject()
 
     private val adapter by lazy {
         ItemShoppingListAdapter(
@@ -40,17 +40,10 @@ class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListLi
 
     private var jobRefresh: Job? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        getFab()?.setImageResource(R.drawable.ic_mic_black_24dp)
-        return inflater.inflate(R.layout.item_shopping_list_layout, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getFab()?.setImageResource(R.drawable.ic_mic_black_24dp)
+
         initAdapter()
         context?.let {
             dialogExplainRecognition =
@@ -77,13 +70,13 @@ class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListLi
 
     private suspend fun loadListAsync(){
         isRefreshing(true)
-        presenter.loadItemsShoppingListByShoppingListId(currentShoppingListId)
+        viewModel.loadItemsShoppingListByShoppingListId(currentShoppingListId)
         loadList()
     }
 
     private fun loadList() {
         activity?.runOnUiThread {
-            val list = presenter.getOrderedItems(currentShoppingListId)
+            val list = viewModel.getOrderedItems(currentShoppingListId)
             adapter.clear()
             adapter.addAll(list)
             thisListIsEmpty()
@@ -117,19 +110,19 @@ class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListLi
     }
 
     private suspend fun refresh(){
-        presenter.sendItemsShoppingList(currentShoppingListId)
+        viewModel.sendItemsShoppingList(currentShoppingListId)
         loadListAsync()
     }
 
 
     override fun deleteItem(item: ItemShoppingList) {
-        presenter.markToDeleteItem(item)
+        viewModel.markToDeleteItem(item)
         loadList()
         updateTotalItemsToCompleteShoppingList()
     }
 
     override fun onSelectedItem(item: ItemShoppingList) {
-        presenter.updateSelectedItem(item, currentShoppingListId)
+        viewModel.updateSelectedItem(item, currentShoppingListId)
         loadList()
     }
 
@@ -145,7 +138,7 @@ class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListLi
     }
 
     private fun updateTotalItemsToCompleteShoppingList(){
-        presenter.updateShoppingListTotalItems(currentShoppingListId, adapter.itemCount)
+        viewModel.updateShoppingListTotalItems(currentShoppingListId, adapter.itemCount)
         thisListIsEmpty()
     }
 
@@ -153,10 +146,10 @@ class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListLi
         hideDialog()
         val results = event.bestResult.split(" e ", ignoreCase = true)
         results.forEach {
-            val itemShoppingList = presenter.getData(shoppingListId = currentShoppingListId).copy(
+            val itemShoppingList = viewModel.getData(shoppingListId = currentShoppingListId).copy(
                 description = it
             )
-            presenter.add(itemShoppingList)
+            viewModel.add(itemShoppingList)
             loadList()
         }
         updateTotalItemsToCompleteShoppingList()
@@ -180,7 +173,11 @@ class ItemShoppingListFragment: AbstractCollectionFragment(), ItemShoppingListLi
 
     private fun sendItemsShoppingList(){
         activity?.lifecycleScope?.launch(Dispatchers.IO) {
-            presenter.sendItemsShoppingList(currentShoppingListId)
+            viewModel.sendItemsShoppingList(currentShoppingListId)
         }
+    }
+
+    override fun initBindingProperties() {
+
     }
 }

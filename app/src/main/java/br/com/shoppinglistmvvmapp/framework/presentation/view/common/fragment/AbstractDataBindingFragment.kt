@@ -8,9 +8,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class AbstractWithDataBindingFragment<Binding: ViewDataBinding>(
+abstract class AbstractDataBindingFragment<Binding: ViewDataBinding>(
     @LayoutRes private val layoutId: Int
-): AbstractSpeakAndRecognitionFragment() {
+): AbstractFragment() {
 
     protected lateinit var binding: Binding
 
