@@ -18,13 +18,10 @@ import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentList
 import br.com.shoppinglistmvvmapp.framework.util.recognition.RecognitionParams
 import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnErrorEvent
 import br.com.shoppinglistmvvmapp.framework.util.recognition.event.RecognitionOnResultEvent
-import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.extension.yesAnswer
-import kotlinx.android.synthetic.main._empty_list_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBinding>(
     R.layout.shopping_list_layout
@@ -77,15 +74,15 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
     }
 
     //TODO CHANGE THAT! -> Put in AbstractClass?
-    private fun addListInAdapter(newList: List<ShoppingListPresentation> = emptyList() /*viewModel.getOrderedItems()*/){
+    private fun addListInAdapter(newList: List<ShoppingListPresentation>){
         safeRunOnUiThread(
             onRun = {
                 adapter.clear()
                 adapter.addAll(newList)
-                empty_list.text = getString(R.string.shopping_list_empty_list)
-                empty_list.setEmptyList(adapter.itemCount)
+                binding.shoppingListEmptyList.emptyList.text = getString(R.string.shopping_list_empty_list)
             },
             onCompletion = {
+                binding.shoppingListEmptyList.emptyList.setEmptyList(adapter.itemCount)
                 isRefreshing(false)
             }
         )
@@ -101,7 +98,7 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
                 speakOk()
             } else {
                 val shoppingList = viewModel.createShoppingList(bestResult)
-                addItemInAdapter(shoppingList)
+                addNewItemListInAdapter(shoppingList)
 
                 val params =
                     RecognitionParams(
@@ -114,19 +111,6 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
                 )
             }
         }
-    }
-
-    //TODO CHANGE THAT! -> REMOVE
-    private fun addItemInAdapter(shoppingList: ShoppingList){
-        GlobalUtils.shoppingLists.add(shoppingList)
-//        adapter.add(shoppingList)
-        empty_list.setEmptyList(adapter.itemCount)
-    }
-
-    private fun updateTitle(newValue: String, shoppingList: ShoppingList){
-        viewModel.updateTitle(newValue, shoppingList)
-        //TODO CHANGE THAT! -> REMOVE
-        adapter.notifyDataSetChanged()
     }
 
     //TODO CHANGE THAT! -> CHANGE, CHANGE, PLS CHANGE! XD
@@ -142,15 +126,6 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
         }
     }
 
-    override fun onClickDeleteItemList(shoppingList: ShoppingList) {
-        yesConfirmMessage(
-            resStringMessage = R.string.shopping_list_delete_item,
-            onYesClick = {
-                viewModel.deleteItem(shoppingList)
-            }
-        )
-    }
-
     //TODO CHANGE THAT! -> Put on another layer
     override fun onClickEditItemList(shoppingList: ShoppingList) {
         editMessage(
@@ -163,12 +138,29 @@ class ShoppingListFragment : AbstractCollectionMVVMFragment<ShoppingListLayoutBi
         )
     }
 
+    private fun updateTitle(newValue: String, shoppingList: ShoppingList){
+        viewModel.updateTitle(newValue, shoppingList)
+    }
+
+    private fun addNewItemListInAdapter(shoppingList: ShoppingList){
+        viewModel.add(shoppingList)
+    }
+
     override fun onClickFloatingButton(){
         stopAll()
         speak(
             R.string.text_to_speech_title_shopping_list,
             onSpeakDone = {
                 startRecognition()
+            }
+        )
+    }
+
+    override fun onClickDeleteItemList(shoppingList: ShoppingList) {
+        yesConfirmMessage(
+            resStringMessage = R.string.shopping_list_delete_item,
+            onYesClick = {
+                viewModel.deleteItem(shoppingList)
             }
         )
     }

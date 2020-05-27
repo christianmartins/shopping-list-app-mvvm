@@ -105,4 +105,7 @@ class ShoppingListRepository {
         }
     }
 
+    fun add(shoppingList: ShoppingList){
+        GlobalUtils.shoppingLists.add(shoppingList)
+    }
 }

@@ -10,10 +10,10 @@ import br.com.shoppinglistmvvmapp.framework.util.interfaces.ShoppingFragmentList
 class ShoppingListAdapter(
     private val clickHandler: ShoppingFragmentListClickHandler
 ): AbstractAdapter<
-        ShoppingListViewHolder,
-        ShoppingListViewHolderMvvmLayoutBinding,
-        ShoppingListPresentation
-        >() {
+    ShoppingListViewHolder,
+    ShoppingListViewHolderMvvmLayoutBinding,
+    ShoppingListPresentation
+>() {
 
     override val layoutId: Int = R.layout.shopping_list_view_holder_mvvm_layout
 

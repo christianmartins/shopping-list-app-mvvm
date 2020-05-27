@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import br.com.shoppinglistmvvmapp.data.mock.ShoppingListMock
-import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.data.repository.ShoppingListRepository
-import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.mapper.ShoppingListMapper
-import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.model.ShoppingListPresentation
-import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
+import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.AbstractViewModel
+import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.mapper.ShoppingListMapper
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.state.ShoppingListViewState
+import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
 import br.com.shoppinglistmvvmapp.framework.util.extension.cancelIfActive
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -41,11 +40,6 @@ class ShoppingListViewModel: AbstractViewModel() {
 
     suspend fun sendShoppingList(){
         return shoppingListRepository.sendAndRefreshShoppingList()
-    }
-
-    suspend fun fetchShoppingListsByUser(){
-        shoppingListRepository.fetchByUser()
-        refresh()
     }
 
     fun fetch(){
@@ -83,5 +77,12 @@ class ShoppingListViewModel: AbstractViewModel() {
 
     fun updateTitle(newValue: String, shoppingList: ShoppingList){
         shoppingListRepository.updateTitle(newValue, shoppingList)
+        fetch()
     }
+
+    fun add(shoppingList: ShoppingList){
+        shoppingListRepository.add(shoppingList)
+        fetch()
+    }
+
 }
