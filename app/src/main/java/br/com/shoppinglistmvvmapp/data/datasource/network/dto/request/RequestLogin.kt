@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.data.webservice.request
+package br.com.shoppinglistmvvmapp.data.datasource.network.dto.request
 
 import com.google.gson.annotations.SerializedName
 

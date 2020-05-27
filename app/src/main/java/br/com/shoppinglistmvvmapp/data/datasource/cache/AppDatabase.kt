@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.framework
+package br.com.shoppinglistmvvmapp.data.datasource.cache
 
 //@Database(entities = [(ShoppingList::class)], version = 1, exportSchema = false)
 //abstract class AppDatabase: RoomDatabase() {

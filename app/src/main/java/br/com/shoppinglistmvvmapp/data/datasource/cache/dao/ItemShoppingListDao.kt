@@ -1,4 +1,4 @@
-package br.com.shoppinglistmvvmapp.data.dao
+package br.com.shoppinglistmvvmapp.data.datasource.cache.dao
 
 //@Dao
 interface ItemShoppingListDao {

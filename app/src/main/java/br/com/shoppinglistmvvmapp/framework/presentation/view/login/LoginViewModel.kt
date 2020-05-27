@@ -3,7 +3,7 @@ package br.com.shoppinglistmvvmapp.framework.presentation.view.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import br.com.shoppinglistmvvmapp.data.repository.UserRepository
+import br.com.shoppinglistmvvmapp.domain.usecase.LoginUseCase
 import br.com.shoppinglistmvvmapp.framework.presentation.view.common.AbstractViewModel
 import br.com.shoppinglistmvvmapp.framework.presentation.view.login.state.LoginViewState
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
@@ -12,7 +12,9 @@ import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel: AbstractViewModel() {
+class LoginViewModel(
+    private val loginUseCase: LoginUseCase
+): AbstractViewModel() {
 
     private val _loginViewState = MutableLiveData<LoginViewState>()
     val loginViewState: LiveData<LoginViewState> = _loginViewState
@@ -21,7 +23,7 @@ class LoginViewModel: AbstractViewModel() {
         var isSuccess = false
         stateLoading()
         viewModelScope.launch(Dispatchers.IO) {
-            isSuccess = onLoginAsync(email, password)
+            isSuccess = loginUseCase.execute(email, password)
         }.invokeOnCompletion {
             safeRunOnUiThread {
                 _loginViewState.value = if(isSuccess){
@@ -36,10 +38,6 @@ class LoginViewModel: AbstractViewModel() {
 
     private fun stateLoading(){
         _loginViewState.value = LoginViewState.Loading
-    }
-
-    private suspend fun onLoginAsync(email: String, password: String): Boolean{
-        return UserRepository().loginAsync(email, password)
     }
 
     fun onVisitorClick(){

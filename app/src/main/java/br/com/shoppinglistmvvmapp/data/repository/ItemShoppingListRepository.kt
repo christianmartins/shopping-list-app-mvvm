@@ -1,15 +1,16 @@
 package br.com.shoppinglistmvvmapp.data.repository
 
 import br.com.shoppinglistmvvmapp.domain.model.ItemShoppingList
-import br.com.shoppinglistmvvmapp.data.webservice.NetworkServiceProvider
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestSaveItemShoppingList
+import br.com.shoppinglistmvvmapp.data.datasource.network.service.common.NetworkServiceProvider
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestSaveItemShoppingList
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ItemShoppingListRepository {
-    private val networkServiceProvider = NetworkServiceProvider()
+    private val networkServiceProvider =
+        NetworkServiceProvider()
 
     fun add(item: ItemShoppingList) {
         GlobalUtils.itemsShoppingList.add(item)

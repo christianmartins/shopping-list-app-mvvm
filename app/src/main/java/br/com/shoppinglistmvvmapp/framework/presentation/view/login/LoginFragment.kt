@@ -13,6 +13,7 @@ import br.com.shoppinglistmvvmapp.framework.presentation.view.common.fragment.Ab
 import br.com.shoppinglistmvvmapp.framework.presentation.view.login.state.LoginViewState
 import br.com.shoppinglistmvvmapp.framework.presentation.view.shoppinglist.ShoppingListFragmentDirections
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.getSafeTextWithTrim
+import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRun
 import br.com.shoppinglistmvvmapp.framework.presentation.view.util.extension.safeRunOnUiThread
 import br.com.shoppinglistmvvmapp.utils.extension.nonNullable
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -63,18 +64,24 @@ class LoginFragment: AbstractDataBindingFragment<LoginFragmentLayoutBinding>(R.l
     }
 
     private fun setPreferenceData(){
-        with(context?.getSharedPreferences("login", Context.MODE_PRIVATE)) {
-            binding.loginEditTextEmail.setText(this?.getString("email", "").nonNullable())
-            binding.loginEditTextPassowrd.setText(this?.getString("clearTextPassword", "").nonNullable())
+        safeRun {
+            with(context?.getSharedPreferences("login", Context.MODE_PRIVATE)) {
+                binding.loginEditTextEmail.setText(this?.getString("email", "").nonNullable())
+                binding.loginEditTextPassowrd.setText(
+                    this?.getString("clearTextPassword", "").nonNullable()
+                )
+            }
         }
     }
 
     private fun savePreferenceData(){
-        context?.getSharedPreferences("login", Context.MODE_PRIVATE).run {
-            this?.edit {
-                putString("email", getEmail())
-                putString("clearTextPassword", getPassword())
-                apply()
+        safeRun {
+            context?.getSharedPreferences("login", Context.MODE_PRIVATE).run {
+                this?.edit {
+                    putString("email", getEmail())
+                    putString("clearTextPassword", getPassword())
+                    apply()
+                }
             }
         }
     }

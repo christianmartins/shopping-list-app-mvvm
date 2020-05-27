@@ -1,5 +1,6 @@
-package br.com.shoppinglistmvvmapp.data.webservice
+package br.com.shoppinglistmvvmapp.data.datasource.network.service.common
 
+import br.com.shoppinglistmvvmapp.data.datasource.network.service.ShoppingListAppApi
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient

@@ -2,7 +2,11 @@ package br.com.shoppinglistmvvmapp.di.module
 
 fun getAllModulesList() = listOf(
     viewModelModule,
-    viewUtilModule
+    viewUtilModule,
+    repositoryModule,
+    useCaseModule,
+    networkModule,
+    networkDataSourceModule
 )
 
 

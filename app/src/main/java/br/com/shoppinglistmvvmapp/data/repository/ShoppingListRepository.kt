@@ -1,8 +1,8 @@
 package br.com.shoppinglistmvvmapp.data.repository
 
 import br.com.shoppinglistmvvmapp.domain.model.ShoppingList
-import br.com.shoppinglistmvvmapp.data.webservice.NetworkServiceProvider
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestSaveShoppingList
+import br.com.shoppinglistmvvmapp.data.datasource.network.service.common.NetworkServiceProvider
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestSaveShoppingList
 import br.com.shoppinglistmvvmapp.utils.GlobalUtils
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +10,8 @@ import kotlinx.coroutines.withContext
 
 class ShoppingListRepository {
 
-    private val networkServiceProvider = NetworkServiceProvider()
+    private val networkServiceProvider =
+        NetworkServiceProvider()
 
     private fun findShoppingList(currentShoppingListId: String): ShoppingList?{
         return GlobalUtils.shoppingLists.find { it.id == currentShoppingListId }

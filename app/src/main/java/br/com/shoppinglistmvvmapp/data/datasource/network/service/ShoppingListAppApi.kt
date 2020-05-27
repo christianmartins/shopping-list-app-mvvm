@@ -1,10 +1,10 @@
-package br.com.shoppinglistmvvmapp.data.webservice
+package br.com.shoppinglistmvvmapp.data.datasource.network.service
 
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestLogin
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestRegisterUser
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestSaveItemShoppingList
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestSaveShoppingList
-import br.com.shoppinglistmvvmapp.data.webservice.response.*
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestLogin
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestRegisterUser
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestSaveItemShoppingList
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestSaveShoppingList
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.response.*
 import retrofit2.Call
 import retrofit2.http.*
 

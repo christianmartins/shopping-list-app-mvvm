@@ -1,19 +1,21 @@
-package br.com.shoppinglistmvvmapp.data.repository
+package br.com.shoppinglistmvvmapp.data.datasource.network.implementation
 
-import br.com.shoppinglistmvvmapp.data.webservice.NetworkServiceProvider
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestLogin
-import br.com.shoppinglistmvvmapp.data.webservice.request.RequestRegisterUser
+import br.com.shoppinglistmvvmapp.data.datasource.network.abstraction.UserNetworkDataSource
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestLogin
+import br.com.shoppinglistmvvmapp.data.datasource.network.dto.request.RequestRegisterUser
+import br.com.shoppinglistmvvmapp.data.datasource.network.service.UserService
 import br.com.shoppinglistmvvmapp.utils.LoggedUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UserRepository {
-    private val networkServiceProvider = NetworkServiceProvider()
+class UserNetworkDataSourceImpl(
+    private val userService: UserService
+): UserNetworkDataSource {
 
-    suspend fun loginAsync(email: String, password: String): Boolean{
+    override suspend fun loginAsync(email: String, password: String): Boolean{
         return try{
             val response = withContext(Dispatchers.IO){
-                networkServiceProvider.getService().login(RequestLogin(email, password)).execute()
+                userService.login(RequestLogin(email, password)).execute()
             }
 
             if(response.isSuccessful){
@@ -36,10 +38,10 @@ class UserRepository {
         }
     }
 
-    suspend fun registerUser(email: String, password: String, firstName: String, lastName: String): Boolean{
+    override suspend fun registerUser(email: String, password: String, firstName: String, lastName: String): Boolean{
         return try{
             val response = withContext(Dispatchers.IO){
-                networkServiceProvider.getService().registerUser(RequestRegisterUser(email, password, firstName, lastName)).execute()
+                userService.registerUser(RequestRegisterUser(email, password, firstName, lastName)).execute()
             }
 
             if(response.isSuccessful){
